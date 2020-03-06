@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Calora</string>
+    <string name="full_name">Full name</string>
+    <string name="email_address">Email address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_have_account">Already have account ?</string>
+    <string name="login">Login</string>
+    <string name="new_user_create_account">New user ? Create account</string>
+</resources>
