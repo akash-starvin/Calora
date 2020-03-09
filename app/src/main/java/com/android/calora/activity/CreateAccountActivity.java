@@ -68,7 +68,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if (getUserCredentials()) {
                     if(checkInternet())
                     {
-                        checkEmailExistQuery = FirebaseDatabase.getInstance().getReference( Constants.FB_ACC_INFO ).orderByChild( Constants.FB_ACC_INFO_CHILD_USER_EMAIL ).equalTo( sUserEmail );
+                        checkEmailExistQuery = FirebaseDatabase.getInstance().getReference( Constants.FB_ACC_INFO ).orderByChild( Constants.FB_ACC_INFO_CHILD_EMAIL ).equalTo( sUserEmail );
                         checkEmailExistQuery.addValueEventListener( checkEmailExistVLE );
                     } else {
                         Snackbar.make( view,"No internet connection", Snackbar.LENGTH_LONG ).show();

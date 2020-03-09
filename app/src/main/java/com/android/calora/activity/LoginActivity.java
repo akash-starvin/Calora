@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.calora.Constants;
+import com.android.calora.HomeActivity;
 import com.android.calora.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,7 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_login );
         ButterKnife.bind( this );
+        FirebaseAuth.getInstance().signOut();
         mAuth = FirebaseAuth.getInstance();
+        Log.e( "======", mAuth.getUid()+"" );
         getSharedPreferenceData();
 
         btnLogin.setOnClickListener( new View.OnClickListener() {
@@ -55,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     if(checkInternet())
                     {
-                        checkEmailExistQuery = FirebaseDatabase.getInstance().getReference( Constants.FB_ACC_INFO ).orderByChild( Constants.FB_ACC_INFO_CHILD_USER_EMAIL ).equalTo( sUserEmail );
+                        checkEmailExistQuery = FirebaseDatabase.getInstance().getReference( Constants.FB_ACC_INFO ).orderByChild( Constants.FB_ACC_INFO_CHILD_EMAIL ).equalTo( sUserEmail );
                         checkEmailExistQuery.addValueEventListener( checkEmailExistVLE );
                     }
                     else
@@ -73,19 +76,22 @@ public class LoginActivity extends AppCompatActivity {
         } );
 
     }
-    ValueEventListener checkEmailExistVLE = new ValueEventListener() {
+
+    final ValueEventListener checkEmailExistVLE = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             try {
+                Log.e( "=======VLE", sUserEmail+sUserPassword );
                 if (!dataSnapshot.hasChildren()) {
                     etEmail.setError( "Email isn't registered" );
-                }
-                else {
-                    checkEmailExistQuery.removeEventListener( checkEmailExistVLE );
+                } else {
+                    //checkEmailExistQuery.removeEventListener( checkEmailExistVLE );
+                    Log.e( "=======VLE_ELSE", sUserEmail+sUserPassword );
+
                     signInUser();
                 }
             } catch (Exception e) {
-                Toast.makeText( getApplicationContext(), "Error, please try again", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( getApplicationContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
             }
         }
 
@@ -96,14 +102,13 @@ public class LoginActivity extends AppCompatActivity {
     };
 
     private void signInUser() {
+        Log.e( "=======fun()", sUserEmail+sUserPassword );
         mAuth.signInWithEmailAndPassword(sUserEmail,sUserPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            saveUserDataInSharedPrefernce();
-
-                            Toast.makeText( LoginActivity.this, "Logged in"+mAuth.getUid(), Toast.LENGTH_SHORT ).show();
+                            saveUserDataInSharedPreference();
                         } else {
                             Toast.makeText( getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT ).show();
                         }
@@ -145,12 +150,16 @@ public class LoginActivity extends AppCompatActivity {
         etEmail.setText( sUserEmail );
         etPassword.setText( sUserPassword );
     }
-    private void saveUserDataInSharedPrefernce() {
+    private void saveUserDataInSharedPreference() {
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SP_LOGIN_CREDENTIALS ,MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putString( Constants.SP_EMAIL, sUserEmail);
         myEdit.putString( Constants.SP_PASSWORD, sUserPassword);
         myEdit.commit();
+        Log.e( "======Login saved to SP", sUserEmail+sUserPassword );
+        Intent intent =  new Intent( getApplicationContext(), HomeActivity.class );
+        startActivity( intent );
+        Toast.makeText( LoginActivity.this, "Logged in "+mAuth.getUid(), Toast.LENGTH_SHORT ).show();
     }
     private boolean checkInternet()
     {
