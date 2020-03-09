@@ -36,8 +36,8 @@
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.android.calora.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_add_meal"
+        android:name="com.android.calora.ui.add_meal.AddMealFragment"
+        android:label="@string/menu_add_meal"
+        tools:layout="@layout/fragment_add_meal" />
 </navigation>
