@@ -17,7 +17,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_add_meal">Add Meal</string>
+    <string name="menu_add_meal">Add food item</string>
 
     <string name="home_second">Home Second</string>
     <string name="profile">Profile</string>
@@ -43,8 +43,10 @@
     <string name="water">Water</string>
     <string name="food_name">Food name</string>
     <string name="save">Save</string>
-
-
+    <string name="selected_food_items">Selected food items</string>
+    <string name="add_food_item_to_list">Add food item to list</string>
+    <string name="save_meal">Save Meal</string>
+    <string name="meal_name">Meal name</string>
 
 
     <string-array name="unit_measure">

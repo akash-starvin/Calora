@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/nav_add_meal"
-        android:name="com.android.calora.ui.add_meal.AddMealFragment"
+        android:name="com.android.calora.ui.add_meal.AddFoodItemFragment"
         android:label="@string/menu_add_meal"
-        tools:layout="@layout/fragment_add_meal" />
+        tools:layout="@layout/fragment_add_food_item" />
 </navigation>

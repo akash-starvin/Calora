@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class AddMealViewModel extends ViewModel {
+public class AddFoodItemViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public AddMealViewModel() {
+    public AddFoodItemViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue( "This is slideshow fragment" );
     }

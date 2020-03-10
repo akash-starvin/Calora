@@ -11,17 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.calora.Constants;
-import com.android.calora.FbAddMeal;
+import com.android.calora.firebase.FbAddFoodItem;
 import com.android.calora.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,8 +28,8 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddMealFragment extends Fragment {
-    @BindView( R.id.addMealspinner) Spinner spinnerUnitMeasure;
+public class AddFoodItemFragment extends Fragment {
+    @BindView( R.id.addMealSpinUnit) Spinner spinnerUnit;
     @BindView( R.id.addMealEtName ) EditText etName;
     @BindView( R.id.addMealProtein ) EditText etProtein;
     @BindView( R.id.addMealCarbs ) EditText etCarbs;
@@ -41,16 +38,16 @@ public class AddMealFragment extends Fragment {
     @BindView( R.id.btnAddMeal ) Button btnAddMeal;
 
     private String sName, sUnit;
-    private int iProtien, iCarbs, iFats, iCalories;
-    private AddMealViewModel slideshowViewModel;
+    private Double iProtien=0.0, iCarbs=0.0, iFats=0.0, iCalories=0.0;
+    private AddFoodItemViewModel slideshowViewModel;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference refAddMeal = database.getReference( Constants.FB_MEAL_LIST );
+    private DatabaseReference refAddFoodItem = database.getReference( Constants.FB_FOOD_ITEM_LIST );
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel = ViewModelProviders.of( this ).get( AddMealViewModel.class );
-        View root = inflater.inflate( R.layout.fragment_add_meal, container, false );
+        slideshowViewModel = ViewModelProviders.of( this ).get( AddFoodItemViewModel.class );
+        View root = inflater.inflate( R.layout.fragment_add_food_item, container, false );
         ButterKnife.bind( this,root );
-        setProductSpinner();
+        setSpinner();
 
         btnAddMeal.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -75,12 +72,12 @@ public class AddMealFragment extends Fragment {
         etCarbs.setText( "" );
         etFats.setText( "" );
         etCalories.setText( "" );
-        spinnerUnitMeasure.setSelection( 0 );
+        spinnerUnit.setSelection( 0 );
     }
 
     private void saveMeal() {
-        FbAddMeal fbAddMeal = new FbAddMeal( sName, sUnit, iProtien,iCarbs, iFats,iCalories );
-        refAddMeal.push().setValue( fbAddMeal );
+        FbAddFoodItem fbAddFoodItem = new FbAddFoodItem( sName, sUnit,"Dairy", iProtien,iCarbs, iFats,iCalories );
+        refAddFoodItem.push().setValue( fbAddFoodItem );
         Toast.makeText( getActivity(), "Saved", Toast.LENGTH_SHORT ).show();
     }
 
@@ -98,11 +95,11 @@ public class AddMealFragment extends Fragment {
     }
 
     private boolean getUnit() {
-        if (spinnerUnitMeasure.getSelectedItem().equals( "Select unit of measure" ) ) {
+        if (spinnerUnit.getSelectedItem().equals( "Select unit of measure" ) ) {
             Toast.makeText( getActivity(), "Please select unit of measure for this food item", Toast.LENGTH_SHORT ).show();
             return false;
         }
-        sUnit = spinnerUnitMeasure.getSelectedItem().toString();
+        sUnit = spinnerUnit.getSelectedItem().toString();
         return true;
     }
 
@@ -122,7 +119,7 @@ public class AddMealFragment extends Fragment {
             etProtein.setError( "Enter protein" );
             return false;
         }
-        iProtien = Integer.parseInt(  etProtein.getText().toString());
+        iProtien = Double.parseDouble( etProtein.getText().toString() );
         return true;
     }
 
@@ -132,7 +129,7 @@ public class AddMealFragment extends Fragment {
             etCarbs.setError( "Enter carbs" );
             return false;
         }
-        iCarbs = Integer.parseInt(etCarbs.getText().toString());
+        iCarbs = Double.parseDouble(etCarbs.getText().toString());
         return true;
     }
 
@@ -142,7 +139,7 @@ public class AddMealFragment extends Fragment {
             etFats.setError( "Enter fats" );
             return false;
         }
-        iFats = Integer.parseInt(etFats.getText().toString());
+        iFats = Double.parseDouble(etFats.getText().toString());
         return true;
     }
 
@@ -152,14 +149,14 @@ public class AddMealFragment extends Fragment {
             etCalories.setError( "Enter calories" );
             return false;
         }
-        iCalories =Integer.parseInt( etCalories.getText().toString());
+        iCalories = Double.parseDouble( etCalories.getText().toString());
         return true;
     }
 
-    private void setProductSpinner() {
-        String [] values = {"Select unit of measure","g","ml"};
+    private void setSpinner() {
+        String [] values = {"Select unit of measure","30g","100g","100ml","1pc"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>( Objects.requireNonNull( this.getActivity() ), android.R.layout.simple_spinner_item, values );
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinnerUnitMeasure.setAdapter(adapter);
+        spinnerUnit.setAdapter(adapter);
     }
 }

@@ -1,4 +1,4 @@
-package com.android.calora;
+package com.android.calora.firebase;
 
 public class FBProfileInfo {
 

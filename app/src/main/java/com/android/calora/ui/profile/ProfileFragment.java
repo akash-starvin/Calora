@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.calora.Constants;
-import com.android.calora.FBProfileInfo;
+import com.android.calora.firebase.FBProfileInfo;
 import com.android.calora.R;
 import com.android.calora.firebase.FbAccountInfo;
 import com.google.firebase.auth.FirebaseAuth;
