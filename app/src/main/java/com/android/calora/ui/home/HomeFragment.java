@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.calora.CreateMealActivity;
+import com.android.calora.MealListActivity;
 import com.android.calora.R;
 
 import butterknife.BindView;
@@ -21,6 +22,8 @@ public class HomeFragment extends Fragment {
 
     @BindView( R.id.button )
     Button btn;
+    @BindView( R.id.button2 )
+    Button btn2;
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +36,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent( getContext(), CreateMealActivity.class );
+                startActivity( intent );
+            }
+        } );
+        btn2.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent( getContext(), MealListActivity.class );
                 startActivity( intent );
             }
         } );

@@ -1,4 +1,4 @@
-package com.android.calora.ui.add_meal;
+package com.android.calora.ui.add_food_item;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

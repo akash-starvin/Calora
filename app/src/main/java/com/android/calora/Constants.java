@@ -5,6 +5,11 @@ public class Constants {
     public static String EMAIL = "";
 
 
+    public static final String FB_PROTEIN = "protein";
+    public static final String FB_CARBS = "carbs";
+    public static final String FB_FATS = "fats";
+    public static final String FB_CALORIES = "calories";
+
     public static final String FB_ACC_INFO = "Account Info";
     public static final String FB_ACC_INFO_CHILD_USER_NAME = "userName";
     public static final String FB_ACC_INFO_CHILD_EMAIL = "userEmail";
@@ -22,6 +27,7 @@ public class Constants {
     public static final String FB_FOOD_ITEM_LIST = "Food Item List";
     public static final String FB_FOOD_ITEM_LIST_NAME = "foodItemName";
     public static final String FB_FOOD_ITEM_LIST_UNIT = "unit";
+    public static final String FB_FOOD_ITEM_LIST_MEASURE = "measure";
     public static final String FB_FOOD_ITEM_LIST_TYPE = "type";
     public static final String FB_FOOD_ITEM_LIST_PROTEIN = "protein";
     public static final String FB_FOOD_ITEM_LIST_CARBS = "carbs";
@@ -33,6 +39,15 @@ public class Constants {
     public static final String FB_USER_CREATED_MEAL_LIST_MEAL_NAME = "mealName";
     public static final String FB_USER_CREATED_MEAL_LIST_FOOD_ITEMS = "foodItems";
     public static final String FB_USER_CREATED_MEAL_LIST_TIME = "time";
+
+    public static final String FB_USER_DAY_MEALS = "Day Meals";
+    public static final String FB_USER_DAY_MEALS_NAME = "mealName";
+    public static final String FB_USER_DAY_MEALS_TIME = "time";
+    public static final String FB_USER_DAY_MEALS_DATE = "date";
+    public static final String FB_USER_DAY_MEALS_CALORIES_CONSUMED = "calConsumed";
+    public static final String FB_USER_DAY_MEALS_CALORIES_GOAL = "calGoal";
+    public static final String FB_USER_DAY_MEALS_STATUS = "status";
+
 
 
     //shared preferences

@@ -1,4 +1,4 @@
-package com.android.calora.ui.add_meal;
+package com.android.calora.ui.add_food_item;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -42,7 +42,10 @@ public class AddFoodItemFragment extends Fragment {
     private AddFoodItemViewModel slideshowViewModel;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference refAddFoodItem = database.getReference( Constants.FB_FOOD_ITEM_LIST );
-
+    String [] arrayValues = {"Select unit of measure","30g","100g","100ml","1pc"};
+    String [] arrayMeasure = {"30","100","100","1"};
+    String [] arrayUnits = {"g","g","ml","pc"};
+    private int spinnerPosition ;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel = ViewModelProviders.of( this ).get( AddFoodItemViewModel.class );
         View root = inflater.inflate( R.layout.fragment_add_food_item, container, false );
@@ -76,7 +79,9 @@ public class AddFoodItemFragment extends Fragment {
     }
 
     private void saveMeal() {
-        FbAddFoodItem fbAddFoodItem = new FbAddFoodItem( sName, sUnit,"Dairy", iProtien,iCarbs, iFats,iCalories );
+        String unit = arrayUnits[spinnerPosition];
+        Double measure = Double.parseDouble(  arrayMeasure[spinnerPosition]);
+        FbAddFoodItem fbAddFoodItem = new FbAddFoodItem( sName, unit ,"Meat", iProtien,iCarbs, iFats,iCalories, measure);
         refAddFoodItem.push().setValue( fbAddFoodItem );
         Toast.makeText( getActivity(), "Saved", Toast.LENGTH_SHORT ).show();
     }
@@ -99,7 +104,10 @@ public class AddFoodItemFragment extends Fragment {
             Toast.makeText( getActivity(), "Please select unit of measure for this food item", Toast.LENGTH_SHORT ).show();
             return false;
         }
+        spinnerPosition = spinnerUnit.getSelectedItemPosition() - 1;
         sUnit = spinnerUnit.getSelectedItem().toString();
+        Toast.makeText( getActivity(), spinnerPosition+"", Toast.LENGTH_SHORT ).show();
+
         return true;
     }
 
@@ -154,8 +162,7 @@ public class AddFoodItemFragment extends Fragment {
     }
 
     private void setSpinner() {
-        String [] values = {"Select unit of measure","30g","100g","100ml","1pc"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>( Objects.requireNonNull( this.getActivity() ), android.R.layout.simple_spinner_item, values );
+        ArrayAdapter<String> adapter = new ArrayAdapter<>( Objects.requireNonNull( this.getActivity() ), android.R.layout.simple_spinner_item, arrayValues );
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerUnit.setAdapter(adapter);
     }
