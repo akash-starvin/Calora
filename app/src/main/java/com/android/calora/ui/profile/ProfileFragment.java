@@ -55,7 +55,8 @@ public class ProfileFragment extends Fragment {
     @BindView( R.id.rbFitness ) RadioButton rbFitness;
 
     private ProfileViewModel profileViewModel;
-    private String sUserName, sUserEmail, sUserAge, sUserWeight, sUserHeight, sUserCaloriesGoal, sUserGender="",sUserDietType="", sUserFitnessGoal="";
+    private String sUserName, sUserEmail, sUserGender="",sUserDietType="", sUserFitnessGoal="";
+    private float  fUserAge, fUserWeight, fUserHeight, fUserCaloriesGoal, fProtein=0, fCarbs=0,fFats=0, fBMR;
     private String fbUserName,fbUserEmail, fbUserAge, fbUserWeight, fbUserHeight, fbUserCaloriesGoal, fbUserGender, fbUserDietType, fbUserFitnessGoal;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -69,7 +70,6 @@ public class ProfileFragment extends Fragment {
 
         ButterKnife.bind( this,root );
         mAuth = FirebaseAuth.getInstance();
-        Toast.makeText( getContext(), mAuth.getUid()+"", Toast.LENGTH_SHORT ).show();
         getSharedPreferenceData();
         //if (!mAuth.getUid().isEmpty()) {
             fetchUserName = FirebaseDatabase.getInstance().getReference( Constants.FB_ACC_INFO ).orderByChild( Constants.FB_ACC_INFO_CHILD_EMAIL ).equalTo( sUserEmail );
@@ -82,10 +82,12 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 if (getProfileData())
                 {
-                    updateUserProfile();
-                    if(!fbUserName.equals( sUserName ))
-                    {
-                       updateUserName();
+                    calulate();
+                    if (getCalories()) {
+                        updateUserProfile();
+                        if (!fbUserName.equals( sUserName )) {
+                            updateUserName();
+                        }
                     }
                 }
             }
@@ -139,13 +141,40 @@ public class ProfileFragment extends Fragment {
         return root;
     }
 
+    private void calulate() {
+        if (sUserGender.equals( "Male" ))
+            fBMR = (float) ((10 * fUserWeight) + (6.25 * fUserHeight) - (5 * fUserAge ) + 5);
+        else
+            fBMR = (float) ((10*fUserWeight) + (6.25 * fUserHeight) - (5 * fUserAge ) -161);
+        switch (sUserFitnessGoal)
+        {
+            case "Muscle Building":
+                fBMR *= 2.25;
+                break;
+            case "Fat Loss":
+                fBMR *= 0.75;
+                break;
+            case "Fitness":
+                fBMR *= 1.76;
+                break;
+        }
+        etCaloriesGoal.setText(  fBMR+"" );
+
+        fProtein = (fBMR/4)/4;
+        fCarbs = (fBMR/3)/4;
+        fFats = (fBMR/3)/9;
+        fProtein = Float.parseFloat(String.format("%.0f",fProtein));
+        fCarbs = Float.parseFloat(String.format("%.0f",fCarbs));
+        fFats = Float.parseFloat(String.format("%.0f",fFats));
+    }
+
     private void updateUserName() {
         FbAccountInfo accountInfo = new FbAccountInfo( sUserName,fbUserEmail );
         myRefAccountInfo.child( Objects.requireNonNull( mAuth.getUid() ) ).setValue( accountInfo );
     }
 
     private void updateUserProfile() {
-        FBProfileInfo fbProfileInfo = new FBProfileInfo( sUserAge, sUserGender, sUserWeight, sUserHeight, sUserFitnessGoal, sUserDietType, sUserCaloriesGoal );
+        FBProfileInfo fbProfileInfo = new FBProfileInfo( fUserAge, sUserGender, sUserFitnessGoal, sUserDietType,fUserWeight, fUserHeight, fUserCaloriesGoal, fProtein,fCarbs,fFats );
         myRefProfileInfo.child( Objects.requireNonNull( mAuth.getUid() ) ).setValue( fbProfileInfo );
         Toast.makeText( getContext(), "Profile updated", Toast.LENGTH_SHORT ).show();
     }
@@ -252,7 +281,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private boolean getProfileData() {
-        return getName() && getAge() && getGender() && getWeight() && getHeight() && getDietType() && getFitnessGoal() && getCalories();
+        return getName() && getAge() && getGender() && getWeight() && getHeight() && getDietType() && getFitnessGoal() ;
     }
     private boolean getName() {
         if(etName.getText().toString().isEmpty())
@@ -269,7 +298,7 @@ public class ProfileFragment extends Fragment {
             etAge.setError( "Please enter age" );
             return false;
         }
-        sUserAge = etAge.getText().toString();
+        fUserAge = Float.parseFloat(  etAge.getText().toString());
         return true;
     }
     private boolean getGender() {
@@ -281,12 +310,12 @@ public class ProfileFragment extends Fragment {
             etWeight.setError( "Please enter weight" );
             return false;
         }
-        else if (Integer.parseInt( etWeight.getText().toString() ) > 400)
+        else if (Float.parseFloat( etWeight.getText().toString() ) > 400)
         {
             etWeight.setError( "Please enter a valid weight" );
             return false;
         }
-        sUserWeight = etWeight.getText().toString();
+        fUserWeight = Float.parseFloat(  etWeight.getText().toString());
         return true;
     }
     private boolean getHeight() {
@@ -300,7 +329,7 @@ public class ProfileFragment extends Fragment {
             etHeight.setError( "Please enter a valid height" );
             return false;
         }
-        sUserHeight = etHeight.getText().toString();
+        fUserHeight = Float.parseFloat( etHeight.getText().toString());
         return true;
     }
     private boolean getDietType() {
@@ -320,7 +349,7 @@ public class ProfileFragment extends Fragment {
             etCaloriesGoal.setError( "Please enter a valid calories goal" );
             return false;
         }
-        sUserCaloriesGoal = etCaloriesGoal.getText().toString();
+        fUserCaloriesGoal = Float.parseFloat( etCaloriesGoal.getText().toString());
         return true;
     }
     private void getSharedPreferenceData() {

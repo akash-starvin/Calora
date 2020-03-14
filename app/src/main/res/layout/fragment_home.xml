@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:text="Today"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Today" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayoutToday"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -100,7 +100,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/homeTvProtein"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -109,7 +109,7 @@
                 tools:text="0g" />
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/homeTvCarbs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
@@ -117,7 +117,15 @@
                 tools:text="0g" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/homeTvFats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorText"
+                tools:text="0 g" />
+
+            <TextView
+                android:id="@+id/tvHomeCalories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
@@ -125,15 +133,7 @@
                 tools:text="0g" />
 
             <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorText"
-                tools:text="0 cal" />
-
-            <TextView
-                android:id="@+id/textView18"
+                android:id="@+id/homeTvWater"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
@@ -200,7 +200,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView19"
+                android:id="@+id/homeTvProteinGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -208,28 +208,28 @@
                 tools:text="0%" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/homeTvCarbsGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorText"
                 tools:text="0%" />
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/homeTvFatsGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorText"
                 tools:text="0%" />
 
             <TextView
-                android:id="@+id/textView22"
+                android:id="@+id/homeTvCaloriesGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorText"
                 tools:text="0%" />
 
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/homeTvWaterGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorText"
@@ -237,23 +237,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="104dp"
-        android:text="create meal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="meal list"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        tools:layout_editor_absoluteX="90dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

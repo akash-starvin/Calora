@@ -2,13 +2,14 @@ package com.android.calora.firebase;
 
 public class FBProfileInfo {
 
-    String userAge, userGender, userWeight, userHeight, userFitnessGoal, userDietType, userCaloriesGoal;
+    String userGender, userFitnessGoal, userDietType;
+    float userWeight, userHeight, userCaloriesGoal, protein, carbs, fats,userAge;
 
-    public String getUserAge() {
+    public float getUserAge() {
         return userAge;
     }
 
-    public void setUserAge(String userAge) {
+    public void setUserAge(float userAge) {
         this.userAge = userAge;
     }
 
@@ -18,22 +19,6 @@ public class FBProfileInfo {
 
     public void setUserGender(String userGender) {
         this.userGender = userGender;
-    }
-
-    public String getUserWeight() {
-        return userWeight;
-    }
-
-    public void setUserWeight(String userWeight) {
-        this.userWeight = userWeight;
-    }
-
-    public String getUserHeight() {
-        return userHeight;
-    }
-
-    public void setUserHeight(String userHeight) {
-        this.userHeight = userHeight;
     }
 
     public String getUserFitnessGoal() {
@@ -52,21 +37,64 @@ public class FBProfileInfo {
         this.userDietType = userDietType;
     }
 
-    public String getUserCaloriesGoal() {
+    public float getUserWeight() {
+        return userWeight;
+    }
+
+    public void setUserWeight(float userWeight) {
+        this.userWeight = userWeight;
+    }
+
+    public float getUserHeight() {
+        return userHeight;
+    }
+
+    public void setUserHeight(float userHeight) {
+        this.userHeight = userHeight;
+    }
+
+    public float getUserCaloriesGoal() {
         return userCaloriesGoal;
     }
 
-    public void setUserCaloriesGoal(String userCaloriesGoal) {
+    public void setUserCaloriesGoal(float userCaloriesGoal) {
         this.userCaloriesGoal = userCaloriesGoal;
     }
 
-    public FBProfileInfo(String userAge, String userGender, String userWeight, String userHeight, String userFitnessGoal, String userDietType, String userCaloriesGoal) {
+    public float getProtein() {
+        return protein;
+    }
+
+    public void setProtein(float protein) {
+        this.protein = protein;
+    }
+
+    public float getCarbs() {
+        return carbs;
+    }
+
+    public void setCarbs(float carbs) {
+        this.carbs = carbs;
+    }
+
+    public float getFats() {
+        return fats;
+    }
+
+    public void setFats(float fats) {
+        this.fats = fats;
+    }
+
+    public FBProfileInfo(float userAge, String userGender, String userFitnessGoal, String userDietType, float userWeight, float userHeight, float userCaloriesGoal, float protein, float carbs, float fats) {
         this.userAge = userAge;
         this.userGender = userGender;
-        this.userWeight = userWeight;
-        this.userHeight = userHeight;
         this.userFitnessGoal = userFitnessGoal;
         this.userDietType = userDietType;
+        this.userWeight = userWeight;
+        this.userHeight = userHeight;
         this.userCaloriesGoal = userCaloriesGoal;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fats = fats;
     }
 }

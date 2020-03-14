@@ -10,6 +10,17 @@ public class Constants {
     public static final String FB_FATS = "fats";
     public static final String FB_CALORIES = "calories";
 
+
+    public static final String FB_BREAKFAST = "breakfast";
+    public static final String FB_SNACK1 = "snack1";
+    public static final String FB_LUNCH = "lunch";
+    public static final String FB_SNACK2 = "snack2";
+    public static final String FB_SNACK3 = "snack3";
+    public static final String FB_DINNER = "dinner";
+
+
+
+
     public static final String FB_ACC_INFO = "Account Info";
     public static final String FB_ACC_INFO_CHILD_USER_NAME = "userName";
     public static final String FB_ACC_INFO_CHILD_EMAIL = "userEmail";
@@ -48,7 +59,7 @@ public class Constants {
     public static final String FB_USER_DAY_MEALS_CALORIES_GOAL = "calGoal";
     public static final String FB_USER_DAY_MEALS_STATUS = "status";
 
-
+    public static final String FB_CONSUMED_MEAL = "Consumed Meal";
 
     //shared preferences
     public static final String SP_LOGIN_CREDENTIALS = "userData";

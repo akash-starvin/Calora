@@ -80,12 +80,10 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             try {
-                Log.e( "=======VLE", sUserEmail+sUserPassword );
                 if (!dataSnapshot.hasChildren()) {
                     etEmail.setError( "Email isn't registered" );
                 } else {
                     //checkEmailExistQuery.removeEventListener( checkEmailExistVLE );
-                    Log.e( "=======VLE_ELSE", sUserEmail+sUserPassword );
 
                     signInUser();
                 }
@@ -101,7 +99,6 @@ public class LoginActivity extends AppCompatActivity {
     };
 
     private void signInUser() {
-        Log.e( "=======fun()", sUserEmail+sUserPassword );
         mAuth.signInWithEmailAndPassword(sUserEmail,sUserPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -155,7 +152,6 @@ public class LoginActivity extends AppCompatActivity {
         myEdit.putString( Constants.SP_EMAIL, sUserEmail);
         myEdit.putString( Constants.SP_PASSWORD, sUserPassword);
         myEdit.commit();
-        Log.e( "======Login saved to SP", sUserEmail+sUserPassword );
         Intent intent =  new Intent( getApplicationContext(), HomeActivity.class );
         startActivity( intent );
         Toast.makeText( LoginActivity.this, "Logged in "+mAuth.getUid(), Toast.LENGTH_SHORT ).show();
