@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_login );
         ButterKnife.bind( this );
+
         FirebaseAuth.getInstance().signOut();
         mAuth = FirebaseAuth.getInstance();
         Log.e( "======", mAuth.getUid()+"" );

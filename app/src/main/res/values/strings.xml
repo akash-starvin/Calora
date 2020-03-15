@@ -47,6 +47,9 @@
     <string name="add_food_item_to_list">Add food item to list</string>
     <string name="save_meal">Save Meal</string>
     <string name="meal_name">Meal name</string>
+    <string name="_0g">0g</string>
+    <string name="_0_cal">0 cal</string>
+    <string name="_0_ml">0 ml</string>
 
 
     <string-array name="unit_measure">

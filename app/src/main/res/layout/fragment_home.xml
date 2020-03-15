@@ -17,8 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayoutToday"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutToday"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -29,9 +29,12 @@
         app:layout_constraintTop_toBottomOf="@+id/homeTvDate">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textView6"
@@ -48,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/protein"
+                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 android:textStyle="bold" />
 
@@ -56,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/carbs"
+                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 android:textStyle="bold" />
 
@@ -64,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/fats"
+                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 android:textStyle="bold" />
 
@@ -72,6 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/calories"
+                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 android:textStyle="bold" />
 
@@ -80,15 +87,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/water"
+                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:orientation="vertical">
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textView13"
@@ -104,94 +115,100 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:text="@string/_0g"
                 android:textAlignment="textEnd"
-                android:textColor="@color/colorText"
-                tools:text="0g" />
+                android:textColor="@color/colorText" />
 
             <TextView
                 android:id="@+id/homeTvCarbs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/_0g"
                 android:textAlignment="textEnd"
-                android:textColor="@color/colorText"
-                tools:text="0g" />
+                android:textColor="@color/colorText" />
 
             <TextView
                 android:id="@+id/homeTvFats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/_0g"
                 android:textAlignment="textEnd"
-                android:textColor="@color/colorText"
-                tools:text="0 g" />
+                android:textColor="@color/colorText" />
 
             <TextView
                 android:id="@+id/tvHomeCalories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/_0_cal"
                 android:textAlignment="textEnd"
-                android:textColor="@color/colorText"
-                tools:text="0g" />
+                android:textColor="@color/colorText" />
 
             <TextView
                 android:id="@+id/homeTvWater"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/_0_ml"
                 android:textAlignment="textEnd"
-                android:textColor="@color/colorText"
-                tools:text="0 ml" />
+                android:textColor="@color/colorText" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/linearLayout3"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textView24"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp" />
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/homeProgressBarProtein"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
 
             <ProgressBar
-                android:id="@+id/progressBar2"
+                android:id="@+id/homeProgressBarCarbs"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" />
+                android:layout_height="wrap_content" />
 
             <ProgressBar
-                android:id="@+id/progressBar3"
+                android:id="@+id/homeProgressBarFats"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" />
+                android:layout_height="wrap_content" />
 
             <ProgressBar
-                android:id="@+id/progressBar4"
+                android:id="@+id/homeProgressBarCalories"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" />
+                android:layout_height="wrap_content" />
 
             <ProgressBar
-                android:id="@+id/progressBar5"
+                android:id="@+id/homeProgressBarWater"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+
         <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
                 android:id="@+id/textView25"
@@ -236,6 +253,17 @@
                 tools:text="0%" />
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/homeRecycleView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutToday" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

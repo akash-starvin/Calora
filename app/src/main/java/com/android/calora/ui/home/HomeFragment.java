@@ -3,16 +3,18 @@ package com.android.calora.ui.home;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -20,11 +22,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.calora.Constants;
-import com.android.calora.CreateMealActivity;
+import com.android.calora.DetailActivity;
+import com.android.calora.HomeAdapter;
+import com.android.calora.HomeModel;
 import com.android.calora.MealListActivity;
-import com.android.calora.MealListAdapter;
-import com.android.calora.MealListModel;
 import com.android.calora.R;
+import com.android.calora.RecyclerTouchListener;
+import com.android.calora.SelectedMealAdapter;
+import com.android.calora.SelectedMealModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +37,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -41,8 +48,8 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment {
 
-    @BindView( R.id.linearLayoutToday )
-    LinearLayout linearLayout;
+    @BindView( R.id.layoutToday )
+    ConstraintLayout layout;
     @BindView( R.id.homeTvProtein ) TextView tvProtein;
     @BindView( R.id.homeTvCarbs ) TextView tvCarbs;
     @BindView( R.id.homeTvFats ) TextView tvFats;
@@ -51,10 +58,21 @@ public class HomeFragment extends Fragment {
     @BindView( R.id.homeTvCarbsGoal ) TextView tvCarbsGoal;
     @BindView( R.id.homeTvFatsGoal ) TextView tvFatsGoal;
     @BindView( R.id.homeTvCaloriesGoal ) TextView tvCaloriesGoal;
-
-    Query queryConsumedMealData, queryGoalData;
+    @BindView( R.id.homeProgressBarProtein ) ProgressBar progressBarProtein;
+    @BindView( R.id.homeProgressBarCarbs ) ProgressBar progressBarCarbs;
+    @BindView( R.id.homeProgressBarFats ) ProgressBar progressBarFats;
+    @BindView( R.id.homeProgressBarCalories ) ProgressBar progressBarCalories;
+    @BindView( R.id.homeRecycleView ) RecyclerView recyclerView;
+    Query queryConsumedMealData, queryGoalData, queryGetAllConsumedMeal;
     private Float fbProtein, fbCarbs, fbFats, fbCalories,fbProteinGoal, fbCarbsGoal, fbFatsGoal, fbCaloriesGoal;
-    private String date;
+    private Float fbProteinList, fbCarbsList, fbFatsList, fbCaloriesList;
+    private Boolean fbBreakfast, fbSnack1, fbLunch, fbSnack2,fbSnack3,fbDinner;
+    //private float fbProteinList=0, fbCarbsList=0, fbFatsList=0, fbCaloriesList;
+    //private Boolean fbBreakfast = false, fbSnack1 = false, fbLunch = false, fbSnack2 = false,fbSnack3 = false,fbDinner =false;
+    private HomeAdapter homeAdapter;
+    private HomeModel homeModel;
+    private ArrayList<HomeModel> myList = new ArrayList<>(  );
+    private String date, fbDate;
     private FirebaseAuth mAuth;
     private HomeViewModel homeViewModel;
 
@@ -72,27 +90,65 @@ public class HomeFragment extends Fragment {
         queryGoalData = FirebaseDatabase.getInstance().getReference( Constants.FB_PROFILE_INFO ).child( mAuth.getUid() );
         queryGoalData.addValueEventListener( getGoalData );
 
-        linearLayout.setOnClickListener( v -> {
+        queryGetAllConsumedMeal = FirebaseDatabase.getInstance().getReference( Constants.FB_CONSUMED_MEAL ).child( mAuth.getUid() );
+        queryGetAllConsumedMeal.addValueEventListener( getAllConsumedMealData );
+
+        layout.setOnClickListener( v -> {
             Intent intent= new Intent( getContext(), MealListActivity.class );
             startActivity( intent );
         } );
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                homeModel = myList.get( position );
+                Intent intent = new Intent( getContext(), DetailActivity.class );
+                intent.putExtra( "data", (Serializable) homeModel );
+                startActivity( intent );
+                Log.e( "========date", homeModel.getDate() );
+                Log.e( "========Pro", homeModel.getProtein()+"" );
+                Log.e( "========Cal", homeModel.getCalories()+"" );
+                Log.e( "========BF", homeModel.getBreakfast()+"" );
+                Log.e( "========Din", homeModel.getDinner()+"" );
 
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         return root;
     }
-    private ValueEventListener getConsumedMealData = new ValueEventListener() {
-        @SuppressLint("DefaultLocale")
+    private ValueEventListener getAllConsumedMealData = new ValueEventListener() {
         @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        public void onDataChange(DataSnapshot dataSnapshot) {
             try {
-                fbProtein = Float.parseFloat(  dataSnapshot.child( Constants.FB_PROTEIN ).getValue() + "");
-                fbFats = Float.parseFloat( dataSnapshot.child( Constants.FB_CARBS ).getValue() + "");
-                fbCarbs = Float.parseFloat( dataSnapshot.child( Constants.FB_FATS ).getValue() + "");
-                fbCalories = Float.parseFloat( dataSnapshot.child( Constants.FB_CALORIES ).getValue() + "");
 
-                tvProtein.setText( String.format("%.0f",fbProtein));
-                tvCarbs.setText( String.format("%.0f",fbCarbs));
-                tvFats.setText( String.format("%.0f",fbFats));
-                tvCalories.setText( String.format("%.0f",fbCalories));
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    fbDate = String.valueOf( postSnapshot.getKey() );
+                    if(fbDate.endsWith( date.substring( 3 ) )) {
+                        fbProteinList = Float.parseFloat( postSnapshot.child( Constants.FB_PROTEIN ).getValue() + "" );
+                        fbCarbsList = Float.parseFloat( postSnapshot.child( Constants.FB_CARBS ).getValue() + "" );
+                        fbFatsList = Float.parseFloat( postSnapshot.child( Constants.FB_FATS ).getValue() + "" );
+                        fbCaloriesList = Float.parseFloat( postSnapshot.child( Constants.FB_CALORIES ).getValue() + "" );
+
+                        fbBreakfast = Boolean.parseBoolean( postSnapshot.child( Constants.FB_BREAKFAST ).getValue() + "" );
+                        fbSnack1 = Boolean.parseBoolean( postSnapshot.child( Constants.FB_SNACK1 ).getValue() + "" );
+                        fbLunch = Boolean.parseBoolean( postSnapshot.child( Constants.FB_LUNCH ).getValue() + "" );
+                        fbSnack2 = Boolean.parseBoolean( postSnapshot.child( Constants.FB_SNACK2 ).getValue() + "" );
+                        fbSnack3 = Boolean.parseBoolean( postSnapshot.child( Constants.FB_SNACK3 ).getValue() + "" );
+                        fbDinner = Boolean.parseBoolean( postSnapshot.child( Constants.FB_DINNER ).getValue() + "" );
+
+                        homeModel = new HomeModel( fbDate, fbProteinList, fbCarbsList, fbFatsList, fbCaloriesList, fbBreakfast, fbSnack1, fbLunch, fbSnack2, fbSnack3, fbDinner );
+                        myList.add( homeModel );
+                    }
+                }
+                homeAdapter = new HomeAdapter( myList );
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager( getContext());
+                recyclerView.setLayoutManager( mLayoutManager );
+                recyclerView.setItemAnimator( new DefaultItemAnimator() );
+                recyclerView.setAdapter( homeAdapter );
             }
             catch (Exception e) {
                 Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
@@ -104,6 +160,34 @@ public class HomeFragment extends Fragment {
 
         }
     };
+    private ValueEventListener getConsumedMealData = new ValueEventListener() {
+        @SuppressLint({"DefaultLocale", "SetTextI18n"})
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            try {
+                fbProtein = Float.parseFloat(  dataSnapshot.child( Constants.FB_PROTEIN ).getValue() + "");
+                fbFats = Float.parseFloat( dataSnapshot.child( Constants.FB_CARBS ).getValue() + "");
+                fbCarbs = Float.parseFloat( dataSnapshot.child( Constants.FB_FATS ).getValue() + "");
+                fbCalories = Float.parseFloat( dataSnapshot.child( Constants.FB_CALORIES ).getValue() + "");
+
+                tvProtein.setText( String.format("%.0f",fbProtein)+"g");
+                tvCarbs.setText( String.format("%.0f",fbCarbs)+"g");
+                tvFats.setText( String.format("%.0f",fbFats)+"g");
+                tvCalories.setText( String.format("%.0f",fbCalories)+"cal");
+                serProgressMax();
+                setProgressStart();
+            }
+            catch (Exception e) {
+                Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
     private ValueEventListener getGoalData = new ValueEventListener() {
         @SuppressLint("DefaultLocale")
         @Override
@@ -114,10 +198,13 @@ public class HomeFragment extends Fragment {
                 fbCarbsGoal = Float.parseFloat( dataSnapshot.child( Constants.FB_FATS ).getValue() + "");
                 fbCaloriesGoal = Float.parseFloat( dataSnapshot.child( Constants.FB_PROFILE_INFO_CHILD_CALORIES_GOAL ).getValue() + "");
 
-                tvProteinGoal.setText( String.format("%.0f",fbProteinGoal));
-                tvCarbsGoal.setText( String.format("%.0f",fbCarbsGoal));
-                tvFatsGoal.setText( String.format("%.0f",fbFatsGoal));
-                tvCaloriesGoal.setText( String.format("%.0f",fbCaloriesGoal));
+                tvProteinGoal.setText( String.format("%.0f",fbProteinGoal)+"g");
+                tvCarbsGoal.setText( String.format("%.0f",fbCarbsGoal)+"g");
+                tvFatsGoal.setText( String.format("%.0f",fbFatsGoal)+"g");
+                tvCaloriesGoal.setText( String.format("%.0f",fbCaloriesGoal)+"cal");
+
+                serProgressMax();
+                setProgressStart();
             }
             catch (Exception e) {
                 Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
@@ -129,4 +216,17 @@ public class HomeFragment extends Fragment {
 
         }
     };
+
+    private void setProgressStart() {
+        progressBarProtein.setProgress( Integer.parseInt( String.format("%.0f",fbProtein) ) );
+        progressBarCarbs.setProgress( Integer.parseInt( String.format("%.0f",fbCarbs) ) );
+        progressBarFats.setProgress( Integer.parseInt( String.format("%.0f",fbFats) ) );
+        progressBarCalories.setProgress( Integer.parseInt( String.format("%.0f",fbCalories) ) );
+    }
+    private void serProgressMax() {
+        progressBarProtein.setMax( Integer.parseInt( String.format("%.0f",fbProteinGoal) ) );
+        progressBarCarbs.setMax( Integer.parseInt( String.format("%.0f",fbCarbsGoal) ) );
+        progressBarFats.setMax( Integer.parseInt( String.format("%.0f",fbFatsGoal) ) );
+        progressBarCalories.setMax( Integer.parseInt( String.format("%.0f",fbCaloriesGoal) ) );
+    }
 }
