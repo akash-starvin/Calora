@@ -50,11 +50,14 @@
     <string name="_0g">0g</string>
     <string name="_0_cal">0 cal</string>
     <string name="_0_ml">0 ml</string>
+    <string name="today">Today</string>
 
 
     <string-array name="unit_measure">
         <item>g</item>
         <item>ml</item>
     </string-array>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

@@ -1,14 +1,15 @@
 package com.android.calora.ui.home;
 
 import android.annotation.SuppressLint;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,13 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.calora.Constants;
 import com.android.calora.DetailActivity;
+import com.android.calora.DetailedWidget;
 import com.android.calora.HomeAdapter;
 import com.android.calora.HomeModel;
 import com.android.calora.MealListActivity;
 import com.android.calora.R;
 import com.android.calora.RecyclerTouchListener;
-import com.android.calora.SelectedMealAdapter;
-import com.android.calora.SelectedMealModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +45,8 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment {
 
@@ -93,10 +95,14 @@ public class HomeFragment extends Fragment {
         queryGetAllConsumedMeal = FirebaseDatabase.getInstance().getReference( Constants.FB_CONSUMED_MEAL ).child( mAuth.getUid() );
         queryGetAllConsumedMeal.addValueEventListener( getAllConsumedMealData );
 
+
+
+
         layout.setOnClickListener( v -> {
             Intent intent= new Intent( getContext(), MealListActivity.class );
             startActivity( intent );
         } );
+
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -176,6 +182,7 @@ public class HomeFragment extends Fragment {
                 tvCalories.setText( String.format("%.0f",fbCalories)+"cal");
                 serProgressMax();
                 setProgressStart();
+                updateMyWidget(String.valueOf(  fbProtein),String.valueOf(  fbCarbs),String.valueOf(  fbFats),String.valueOf(  fbCalories));
             }
             catch (Exception e) {
                 Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
@@ -188,8 +195,24 @@ public class HomeFragment extends Fragment {
         }
     };
 
+    private void updateMyWidget(String protein, String carbs, String fats, String calories) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getContext());
+        Bundle bundle = new Bundle();
+        int appWidgetId = bundle.getInt(
+                AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID);
+        Toast.makeText(getContext(), "Added Widget", Toast.LENGTH_SHORT).show();
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(Constants.SP_WIDGET, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String data = "Protein - "+protein+"\nCarbs - "+carbs+"\nFats - "+fats+"\nCalories - "+calories;
+        editor.putString( Constants.SP_DATA,  data);
+        editor.commit();
+
+        DetailedWidget.updateAppWidget(getContext(), appWidgetManager, appWidgetId);
+    }
+
     private ValueEventListener getGoalData = new ValueEventListener() {
-        @SuppressLint("DefaultLocale")
+        @SuppressLint({"DefaultLocale", "SetTextI18n"})
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             try {
@@ -207,7 +230,7 @@ public class HomeFragment extends Fragment {
                 setProgressStart();
             }
             catch (Exception e) {
-                Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
+                Toast.makeText( getContext(), "Error, please try again", Toast.LENGTH_SHORT ).show();
             }
         }
 

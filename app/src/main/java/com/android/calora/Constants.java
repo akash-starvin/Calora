@@ -61,9 +61,17 @@ public class Constants {
 
     public static final String FB_CONSUMED_MEAL = "Consumed Meal";
 
+    public static final String FB_WATER = "Water";
+    public static final String FB_WATER_GLASS = "glass";
+
     //shared preferences
     public static final String SP_LOGIN_CREDENTIALS = "userData";
     public static final String SP_EMAIL = "spUserEmail";
     public static final String SP_PASSWORD = "spUserPassword";
+
+
+    //shared preferences
+    public static final String SP_WIDGET = "Widget";
+    public static final String SP_DATA = "data";
 
 }
