@@ -16,5 +16,11 @@
             android:id="@+id/nav_add_meal"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_add_meal" />
+        <item
+            android:id="@+id/nav_create_meal"
+            android:title="@string/menu_create_meal" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/menu_logout" />
     </group>
 </menu>

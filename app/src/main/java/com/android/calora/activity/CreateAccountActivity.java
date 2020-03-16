@@ -55,6 +55,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_create_account );
         ButterKnife.bind(this);
+        if(savedInstanceState!=null)
+        {
+            etEmail.setText( savedInstanceState.getString( "email" ) );
+        }
         mAuth = FirebaseAuth.getInstance();
 
         getSupportActionBar().setTitle("Create Account");

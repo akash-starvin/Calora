@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/_0g"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorText" />
 
             <TextView
@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/_0g"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorText" />
 
             <TextView
@@ -132,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/_0g"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorText" />
 
             <TextView
@@ -140,15 +140,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/_0_cal"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorText" />
 
             <TextView
-                android:id="@+id/homeTvWater"
+                android:id="@+id/tvHomeWater"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/_0_ml"
-                android:textAlignment="textEnd"
+                android:textAlignment="center"
                 android:textColor="@color/colorText" />
         </LinearLayout>
 
@@ -214,13 +214,16 @@
                 android:id="@+id/textView25"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp" />
+                android:text="Goal"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/homeTvProteinGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 tools:text="0%" />
 
@@ -228,6 +231,7 @@
                 android:id="@+id/homeTvCarbsGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 tools:text="0%" />
 
@@ -235,6 +239,7 @@
                 android:id="@+id/homeTvFatsGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 tools:text="0%" />
 
@@ -242,13 +247,15 @@
                 android:id="@+id/homeTvCaloriesGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 tools:text="0%" />
 
             <TextView
-                android:id="@+id/homeTvWaterGoal"
+                android:id="@+id/tvHomeWaterGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:textColor="@color/colorText"
                 tools:text="0%" />
         </LinearLayout>
@@ -260,9 +267,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="88dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutToday" />
 

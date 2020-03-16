@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseAuth.getInstance().signOut();
         mAuth = FirebaseAuth.getInstance();
-        Log.e( "======", mAuth.getUid()+"" );
         getSharedPreferenceData();
 
         btnLogin.setOnClickListener( new View.OnClickListener() {

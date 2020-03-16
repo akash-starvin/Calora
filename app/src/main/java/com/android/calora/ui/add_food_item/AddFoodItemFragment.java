@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.android.calora.Constants;
 import com.android.calora.firebase.FbAddFoodItem;
 import com.android.calora.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -38,19 +39,22 @@ public class AddFoodItemFragment extends Fragment {
     @BindView( R.id.btnAddMeal ) Button btnAddMeal;
 
     private String sName, sUnit;
-    private Double iProtien=0.0, iCarbs=0.0, iFats=0.0, iCalories=0.0;
+    private Double dProtien=0.0, dCarbs=0.0, dFats=0.0, dCalories=0.0;
     private AddFoodItemViewModel slideshowViewModel;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference refAddFoodItem = database.getReference( Constants.FB_FOOD_ITEM_LIST );
+    private DatabaseReference refAddFoodItem = database.getReference( Constants.FB_USER_FOOD_ITEM_LIST );
     String [] arrayValues = {"Select unit of measure","30g","100g","100ml","1pc"};
     String [] arrayMeasure = {"30","100","100","1"};
     String [] arrayUnits = {"g","g","ml","pc"};
     private int spinnerPosition ;
+    private FirebaseAuth mAuth;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel = ViewModelProviders.of( this ).get( AddFoodItemViewModel.class );
         View root = inflater.inflate( R.layout.fragment_add_food_item, container, false );
         ButterKnife.bind( this,root );
         setSpinner();
+        mAuth = FirebaseAuth.getInstance();
 
         btnAddMeal.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -81,9 +85,14 @@ public class AddFoodItemFragment extends Fragment {
     private void saveMeal() {
         String unit = arrayUnits[spinnerPosition];
         Double measure = Double.parseDouble(  arrayMeasure[spinnerPosition]);
-        FbAddFoodItem fbAddFoodItem = new FbAddFoodItem( sName, unit ,"Meat", iProtien,iCarbs, iFats,iCalories, measure);
-        refAddFoodItem.push().setValue( fbAddFoodItem );
-        Toast.makeText( getActivity(), "Saved", Toast.LENGTH_SHORT ).show();
+        dProtien = (double) Math.round( dProtien * 100 )/100;
+        dCarbs = (double) Math.round( dCarbs * 100 )/100;
+        dFats = (double) Math.round( dFats * 100 )/100;
+        dCalories = (double) Math.round( dCalories * 100 )/100;
+
+        FbAddFoodItem fbAddFoodItem = new FbAddFoodItem( sName, unit , dProtien,dCarbs, dFats,dCalories, measure);
+        refAddFoodItem.child( mAuth.getUid() ).push().setValue( fbAddFoodItem );
+        Toast.makeText( getActivity(), "Saved food item", Toast.LENGTH_SHORT ).show();
     }
 
     private boolean checkInternet()
@@ -127,7 +136,7 @@ public class AddFoodItemFragment extends Fragment {
             etProtein.setError( "Enter protein" );
             return false;
         }
-        iProtien = Double.parseDouble( etProtein.getText().toString() );
+        dProtien = Double.parseDouble( etProtein.getText().toString() );
         return true;
     }
 
@@ -137,7 +146,7 @@ public class AddFoodItemFragment extends Fragment {
             etCarbs.setError( "Enter carbs" );
             return false;
         }
-        iCarbs = Double.parseDouble(etCarbs.getText().toString());
+        dCarbs = Double.parseDouble(etCarbs.getText().toString());
         return true;
     }
 
@@ -147,7 +156,7 @@ public class AddFoodItemFragment extends Fragment {
             etFats.setError( "Enter fats" );
             return false;
         }
-        iFats = Double.parseDouble(etFats.getText().toString());
+        dFats = Double.parseDouble(etFats.getText().toString());
         return true;
     }
 
@@ -157,7 +166,7 @@ public class AddFoodItemFragment extends Fragment {
             etCalories.setError( "Enter calories" );
             return false;
         }
-        iCalories = Double.parseDouble( etCalories.getText().toString());
+        dCalories = Double.parseDouble( etCalories.getText().toString());
         return true;
     }
 

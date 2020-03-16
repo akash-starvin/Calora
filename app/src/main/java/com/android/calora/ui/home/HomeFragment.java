@@ -56,6 +56,8 @@ public class HomeFragment extends Fragment {
     @BindView( R.id.homeTvCarbs ) TextView tvCarbs;
     @BindView( R.id.homeTvFats ) TextView tvFats;
     @BindView( R.id.tvHomeCalories ) TextView tvCalories;
+    @BindView( R.id.tvHomeWater ) TextView tvWater;
+    @BindView( R.id.tvHomeWaterGoal ) TextView tvWaterGoal;
     @BindView( R.id.homeTvProteinGoal ) TextView tvProteinGoal;
     @BindView( R.id.homeTvCarbsGoal ) TextView tvCarbsGoal;
     @BindView( R.id.homeTvFatsGoal ) TextView tvFatsGoal;
@@ -64,13 +66,14 @@ public class HomeFragment extends Fragment {
     @BindView( R.id.homeProgressBarCarbs ) ProgressBar progressBarCarbs;
     @BindView( R.id.homeProgressBarFats ) ProgressBar progressBarFats;
     @BindView( R.id.homeProgressBarCalories ) ProgressBar progressBarCalories;
+    @BindView( R.id.homeProgressBarWater ) ProgressBar progressBarWater;
     @BindView( R.id.homeRecycleView ) RecyclerView recyclerView;
-    Query queryConsumedMealData, queryGoalData, queryGetAllConsumedMeal;
+
+    Query queryConsumedMealData, queryGoalData, queryGetAllConsumedMeal, queryGetWater;
     private Float fbProtein, fbCarbs, fbFats, fbCalories,fbProteinGoal, fbCarbsGoal, fbFatsGoal, fbCaloriesGoal;
     private Float fbProteinList, fbCarbsList, fbFatsList, fbCaloriesList;
     private Boolean fbBreakfast, fbSnack1, fbLunch, fbSnack2,fbSnack3,fbDinner;
-    //private float fbProteinList=0, fbCarbsList=0, fbFatsList=0, fbCaloriesList;
-    //private Boolean fbBreakfast = false, fbSnack1 = false, fbLunch = false, fbSnack2 = false,fbSnack3 = false,fbDinner =false;
+    private int fbWater;
     private HomeAdapter homeAdapter;
     private HomeModel homeModel;
     private ArrayList<HomeModel> myList = new ArrayList<>(  );
@@ -95,8 +98,8 @@ public class HomeFragment extends Fragment {
         queryGetAllConsumedMeal = FirebaseDatabase.getInstance().getReference( Constants.FB_CONSUMED_MEAL ).child( mAuth.getUid() );
         queryGetAllConsumedMeal.addValueEventListener( getAllConsumedMealData );
 
-
-
+        queryGetWater = FirebaseDatabase.getInstance().getReference( Constants.FB_WATER ).child( mAuth.getUid() ).child( date );
+        queryGetWater.addValueEventListener( getWater );
 
         layout.setOnClickListener( v -> {
             Intent intent= new Intent( getContext(), MealListActivity.class );
@@ -110,13 +113,6 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent( getContext(), DetailActivity.class );
                 intent.putExtra( "data", (Serializable) homeModel );
                 startActivity( intent );
-                Log.e( "========date", homeModel.getDate() );
-                Log.e( "========Pro", homeModel.getProtein()+"" );
-                Log.e( "========Cal", homeModel.getCalories()+"" );
-                Log.e( "========BF", homeModel.getBreakfast()+"" );
-                Log.e( "========Din", homeModel.getDinner()+"" );
-
-
             }
 
             @Override
@@ -130,7 +126,10 @@ public class HomeFragment extends Fragment {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             try {
-
+                if(!myList.isEmpty()) {
+                    myList.clear();
+                    homeAdapter.notifyDataSetChanged();
+                }
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     fbDate = String.valueOf( postSnapshot.getKey() );
                     if(fbDate.endsWith( date.substring( 3 ) )) {
@@ -155,6 +154,27 @@ public class HomeFragment extends Fragment {
                 recyclerView.setLayoutManager( mLayoutManager );
                 recyclerView.setItemAnimator( new DefaultItemAnimator() );
                 recyclerView.setAdapter( homeAdapter );
+            }
+            catch (Exception e) {
+                Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+    private ValueEventListener getWater = new ValueEventListener() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            try {
+                fbWater = Integer.parseInt(  dataSnapshot.child(Constants.FB_WATER_GLASS ).getValue()+"");
+                progressBarWater.setProgress( fbWater );
+                progressBarWater.setMax( 10 );
+                tvWater.setText( String.valueOf(  fbWater)+" glasses" );
+                tvWaterGoal.setText( "10 glasses" );
             }
             catch (Exception e) {
                 Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
@@ -201,7 +221,6 @@ public class HomeFragment extends Fragment {
         int appWidgetId = bundle.getInt(
                 AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
-        Toast.makeText(getContext(), "Added Widget", Toast.LENGTH_SHORT).show();
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(Constants.SP_WIDGET, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String data = "Protein - "+protein+"\nCarbs - "+carbs+"\nFats - "+fats+"\nCalories - "+calories;
@@ -252,4 +271,5 @@ public class HomeFragment extends Fragment {
         progressBarFats.setMax( Integer.parseInt( String.format("%.0f",fbFatsGoal) ) );
         progressBarCalories.setMax( Integer.parseInt( String.format("%.0f",fbCaloriesGoal) ) );
     }
+
 }

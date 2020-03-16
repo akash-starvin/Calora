@@ -35,6 +35,8 @@ public class Constants {
     public static final String FB_PROFILE_INFO_CHILD_DIET_TYPE = "userDietType";
     public static final String FB_PROFILE_INFO_CHILD_CALORIES_GOAL = "userCaloriesGoal";
 
+    public static final String FB_USER_FOOD_ITEM_LIST = "User Food Item List";
+
     public static final String FB_FOOD_ITEM_LIST = "Food Item List";
     public static final String FB_FOOD_ITEM_LIST_NAME = "foodItemName";
     public static final String FB_FOOD_ITEM_LIST_UNIT = "unit";
@@ -74,4 +76,5 @@ public class Constants {
     public static final String SP_WIDGET = "Widget";
     public static final String SP_DATA = "data";
 
+    public static boolean isProfileSet  = false;
 }
