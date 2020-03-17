@@ -1,264 +1,375 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     tools:context=".ui.home.HomeFragment">
-
-    <TextView
-        android:id="@+id/homeTvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Today"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutToday"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_card_view"
+        android:elevation="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeTvDate">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+
+        <TextView
+            android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/nutrient"
+            android:textColor="@color/colorText"
+            android:textSize="10sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/nutrient"
-                android:textColor="@color/colorText"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/protein"
-                android:textAlignment="center"
-                android:textColor="@color/colorText"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/carbs"
-                android:textAlignment="center"
-                android:textColor="@color/colorText"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/fats"
-                android:textAlignment="center"
-                android:textColor="@color/colorText"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/calories"
-                android:textAlignment="center"
-                android:textColor="@color/colorText"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/water"
-                android:textAlignment="center"
-                android:textColor="@color/colorText"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
+        <TextView
+            android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="16dp"
+            android:text="@string/protein"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/quantity"
-                android:textColor="@color/colorText"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/carbs"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-            <TextView
-                android:id="@+id/homeTvProtein"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/_0g"
-                android:textAlignment="center"
-                android:textColor="@color/colorText" />
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/fats"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-            <TextView
-                android:id="@+id/homeTvCarbs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/_0g"
-                android:textAlignment="center"
-                android:textColor="@color/colorText" />
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/calories"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-            <TextView
-                android:id="@+id/homeTvFats"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/_0g"
-                android:textAlignment="center"
-                android:textColor="@color/colorText" />
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/water"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-            <TextView
-                android:id="@+id/tvHomeCalories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/_0_cal"
-                android:textAlignment="center"
-                android:textColor="@color/colorText" />
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="@string/quantity"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorText"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintTop_toTopOf="@+id/textView6" />
 
-            <TextView
-                android:id="@+id/tvHomeWater"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/_0_ml"
-                android:textAlignment="center"
-                android:textColor="@color/colorText" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/homeTvProtein"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/_0g"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintStart_toStartOf="@+id/textView13"
+            app:layout_constraintTop_toTopOf="@+id/textView8" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
+        <TextView
+            android:id="@+id/homeTvCarbs"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/_0g"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintStart_toStartOf="@+id/textView13"
+            app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+        <TextView
+            android:id="@+id/homeTvFats"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/_0g"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintStart_toStartOf="@+id/textView13"
+            app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+        <TextView
+            android:id="@+id/tvHomeCalories"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/_0_cal"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintEnd_toEndOf="@+id/textView13"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView13"
+            app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+        <TextView
+            android:id="@+id/tvHomeWater"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/_0_ml"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintStart_toStartOf="@+id/textView13"
+            app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+        <ProgressBar
+            android:id="@+id/homeProgressBarProtein"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout4"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout2"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toBottomOf="@+id/homeTvProtein"
+            app:layout_constraintEnd_toStartOf="@+id/homeTvProteinGoal"
+            app:layout_constraintStart_toEndOf="@+id/homeTvProtein"
+            app:layout_constraintTop_toTopOf="@+id/homeTvProtein" />
 
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp" />
+        <TextView
+            android:id="@+id/homeTvProteinGoal"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="@+id/homeTvProtein"
+            app:layout_constraintEnd_toEndOf="@+id/textView13"
+            app:layout_constraintTop_toTopOf="@+id/homeTvProtein"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="0%" />
 
-            <ProgressBar
-                android:id="@+id/homeProgressBarProtein"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+        <ProgressBar
+            android:id="@+id/homeProgressBarCarbs"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/homeTvCarbs"
+            app:layout_constraintEnd_toStartOf="@+id/homeTvCarbsGoal"
+            app:layout_constraintStart_toEndOf="@+id/homeTvCarbs"
+            app:layout_constraintTop_toTopOf="@+id/homeTvCarbs" />
 
-            <ProgressBar
-                android:id="@+id/homeProgressBarCarbs"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/homeTvCarbsGoal"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="@+id/homeTvCarbs"
+            app:layout_constraintEnd_toEndOf="@+id/homeTvProteinGoal"
+            app:layout_constraintTop_toTopOf="@+id/homeTvCarbs"
+            tools:text="0%" />
 
-            <ProgressBar
-                android:id="@+id/homeProgressBarFats"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <ProgressBar
+            android:id="@+id/homeProgressBarFats"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/homeTvFats"
+            app:layout_constraintEnd_toStartOf="@+id/homeTvFatsGoal"
+            app:layout_constraintStart_toEndOf="@+id/homeTvFats"
+            app:layout_constraintTop_toTopOf="@+id/homeTvFats" />
 
-            <ProgressBar
-                android:id="@+id/homeProgressBarCalories"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/homeTvFatsGoal"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="@+id/homeTvFats"
+            app:layout_constraintEnd_toEndOf="@+id/homeTvCarbsGoal"
+            app:layout_constraintTop_toTopOf="@+id/homeTvFats"
+            tools:text="0%" />
 
-            <ProgressBar
-                android:id="@+id/homeProgressBarWater"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/homeProgressBarCalories"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvHomeCalories"
+            app:layout_constraintEnd_toStartOf="@+id/homeTvCaloriesGoal"
+            app:layout_constraintStart_toEndOf="@+id/tvHomeCalories"
+            app:layout_constraintTop_toTopOf="@+id/tvHomeCalories" />
 
+        <TextView
+            android:id="@+id/homeTvCaloriesGoal"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="@+id/tvHomeCalories"
+            app:layout_constraintEnd_toEndOf="@+id/homeTvFatsGoal"
+            app:layout_constraintTop_toTopOf="@+id/tvHomeCalories"
+            tools:text="0%" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
+        <ProgressBar
+            android:id="@+id/homeProgressBarWater"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/tvHomeWaterGoal"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/tvHomeWater"
+            app:layout_constraintTop_toTopOf="@+id/tvHomeWater" />
+
+        <TextView
+            android:id="@+id/tvHomeWaterGoal"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="@+id/tvHomeWater"
+            app:layout_constraintEnd_toEndOf="@+id/homeTvCaloriesGoal"
+            app:layout_constraintTop_toTopOf="@+id/tvHomeWater"
+            tools:text="0%" />
+
+        <TextView
+            android:id="@+id/homeTvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Today"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView25"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Goal"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="150dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeTvDate" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/homeTvProteinGoal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textAlignment="center"
-                android:textColor="@color/colorText"
-                tools:text="0%" />
 
-            <TextView
-                android:id="@+id/homeTvCarbsGoal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textColor="@color/colorText"
-                tools:text="0%" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_card_view"
+        android:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutToday">
 
-            <TextView
-                android:id="@+id/homeTvFatsGoal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textColor="@color/colorText"
-                tools:text="0%" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/this_month"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/homeTvCaloriesGoal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textColor="@color/colorText"
-                tools:text="0%" />
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            <TextView
-                android:id="@+id/tvHomeWaterGoal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textColor="@color/colorText"
-                tools:text="0%" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="8dp"
+            android:text="Date"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginBottom="8dp"
+            android:text="Calories consumed"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -266,12 +377,13 @@
         android:id="@+id/homeRecycleView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutToday" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment {
     @BindView( R.id.homeProgressBarWater ) ProgressBar progressBarWater;
     @BindView( R.id.homeRecycleView ) RecyclerView recyclerView;
 
-    Query queryConsumedMealData, queryGoalData, queryGetAllConsumedMeal, queryGetWater;
+    private Query queryConsumedMealData, queryGoalData, queryGetAllConsumedMeal, queryGetWater;
     private Float fbProtein, fbCarbs, fbFats, fbCalories,fbProteinGoal, fbCarbsGoal, fbFatsGoal, fbCaloriesGoal;
     private Float fbProteinList, fbCarbsList, fbFatsList, fbCaloriesList;
     private Boolean fbBreakfast, fbSnack1, fbLunch, fbSnack2,fbSnack3,fbDinner;
@@ -89,6 +89,7 @@ public class HomeFragment extends Fragment {
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         date = df.format(c);
+        tvWaterGoal.setText( getString( R.string._2500_ml ) );
         queryConsumedMealData = FirebaseDatabase.getInstance().getReference( Constants.FB_CONSUMED_MEAL ).child( mAuth.getUid() ).child( date );
         queryConsumedMealData.addValueEventListener( getConsumedMealData );
 
@@ -145,6 +146,8 @@ public class HomeFragment extends Fragment {
                         fbSnack3 = Boolean.parseBoolean( postSnapshot.child( Constants.FB_SNACK3 ).getValue() + "" );
                         fbDinner = Boolean.parseBoolean( postSnapshot.child( Constants.FB_DINNER ).getValue() + "" );
 
+                        fbCaloriesList = Float.parseFloat(  String.format("%.0f",fbCaloriesList));
+
                         homeModel = new HomeModel( fbDate, fbProteinList, fbCarbsList, fbFatsList, fbCaloriesList, fbBreakfast, fbSnack1, fbLunch, fbSnack2, fbSnack3, fbDinner );
                         myList.add( homeModel );
                     }
@@ -173,8 +176,9 @@ public class HomeFragment extends Fragment {
                 fbWater = Integer.parseInt(  dataSnapshot.child(Constants.FB_WATER_GLASS ).getValue()+"");
                 progressBarWater.setProgress( fbWater );
                 progressBarWater.setMax( 10 );
-                tvWater.setText( String.valueOf(  fbWater)+" glasses" );
-                tvWaterGoal.setText( "10 glasses" );
+                fbWater *= 250;
+                tvWater.setText(  fbWater+getString( R.string._ml ) );
+
             }
             catch (Exception e) {
                 Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
@@ -196,10 +200,10 @@ public class HomeFragment extends Fragment {
                 fbCarbs = Float.parseFloat( dataSnapshot.child( Constants.FB_FATS ).getValue() + "");
                 fbCalories = Float.parseFloat( dataSnapshot.child( Constants.FB_CALORIES ).getValue() + "");
 
-                tvProtein.setText( String.format("%.0f",fbProtein)+"g");
-                tvCarbs.setText( String.format("%.0f",fbCarbs)+"g");
-                tvFats.setText( String.format("%.0f",fbFats)+"g");
-                tvCalories.setText( String.format("%.0f",fbCalories)+"cal");
+                tvProtein.setText( String.format("%.0f",fbProtein)+getString( R.string._g ));
+                tvCarbs.setText( String.format("%.0f",fbCarbs)+getString( R.string._g ));
+                tvFats.setText( String.format("%.0f",fbFats)+getString( R.string._g ));
+                tvCalories.setText( String.format("%.0f",fbCalories)+getString( R.string.cal ));
                 serProgressMax();
                 setProgressStart();
                 updateMyWidget(String.valueOf(  fbProtein),String.valueOf(  fbCarbs),String.valueOf(  fbFats),String.valueOf(  fbCalories));
@@ -231,7 +235,6 @@ public class HomeFragment extends Fragment {
     }
 
     private ValueEventListener getGoalData = new ValueEventListener() {
-        @SuppressLint({"DefaultLocale", "SetTextI18n"})
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             try {
@@ -240,10 +243,11 @@ public class HomeFragment extends Fragment {
                 fbCarbsGoal = Float.parseFloat( dataSnapshot.child( Constants.FB_FATS ).getValue() + "");
                 fbCaloriesGoal = Float.parseFloat( dataSnapshot.child( Constants.FB_PROFILE_INFO_CHILD_CALORIES_GOAL ).getValue() + "");
 
-                tvProteinGoal.setText( String.format("%.0f",fbProteinGoal)+"g");
-                tvCarbsGoal.setText( String.format("%.0f",fbCarbsGoal)+"g");
-                tvFatsGoal.setText( String.format("%.0f",fbFatsGoal)+"g");
-                tvCaloriesGoal.setText( String.format("%.0f",fbCaloriesGoal)+"cal");
+                tvProteinGoal.setText( String.format("%.0f",fbProteinGoal)+getString( R.string._g ));
+                tvCarbsGoal.setText( String.format("%.0f",fbCarbsGoal)+getString( R.string._g ));
+                tvFatsGoal.setText( String.format("%.0f",fbFatsGoal)+getString( R.string._g ));
+                tvCaloriesGoal.setText( String.format("%.0f",fbCaloriesGoal)+getString( R.string._g ));
+
 
                 serProgressMax();
                 setProgressStart();

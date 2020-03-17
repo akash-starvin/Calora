@@ -42,6 +42,7 @@
     <string name="carbs">Carbs</string>
     <string name="fats">Fats</string>
     <string name="calories">Calories</string>
+    <string name="cal">cal</string>
     <string name="water">Water</string>
     <string name="food_name">Food name</string>
     <string name="save">Save</string>
@@ -52,6 +53,10 @@
     <string name="_0g">0g</string>
     <string name="_0_cal">0 cal</string>
     <string name="_0_ml">0 ml</string>
+    <string name="_g">g</string>
+    <string name="_ml">ml</string>
+    <string name="_2500_ml">2500ml</string>
+
     <string name="today">Today</string>
 
 
@@ -62,5 +67,6 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="quantity_of_selected_food_item">Quantity of selected food item</string>
+    <string name="this_month">  This Month</string>
 
 </resources>
