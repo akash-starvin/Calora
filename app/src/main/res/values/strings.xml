@@ -42,6 +42,13 @@
     <string name="carbs">Carbs</string>
     <string name="fats">Fats</string>
     <string name="calories">Calories</string>
+
+    <string name="quantity_c">Quantity :</string>
+    <string name="protein_c">Protein :</string>
+    <string name="carbs_c">Carbs :</string>
+    <string name="fats_c">Fats :</string>
+    <string name="cal_c">Cal :</string>
+
     <string name="cal">cal</string>
     <string name="water">Water</string>
     <string name="food_name">Food name</string>
@@ -55,8 +62,9 @@
     <string name="_0_ml">0 ml</string>
     <string name="_g">g</string>
     <string name="_ml">ml</string>
+    <string name="_cal">cal</string>
     <string name="_2500_ml">2500ml</string>
-
+    <string name="_0f">"%.0f"</string>
     <string name="today">Today</string>
 
 
@@ -68,5 +76,8 @@
     <string name="add_widget">Add widget</string>
     <string name="quantity_of_selected_food_item">Quantity of selected food item</string>
     <string name="this_month">  This Month</string>
+    <string name="select_food_item_type">Select food item type</string>
+    <string name="select_food_item" />
+    <string name="select_food_time" />
 
 </resources>

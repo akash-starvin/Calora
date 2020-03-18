@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.profile.ProfileFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,6 +18,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -25,9 +27,11 @@
                 android:id="@+id/profileEtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:hint="@string/full_name"
                 android:inputType="textPersonName"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,6 +42,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
@@ -46,9 +51,11 @@
                 android:id="@+id/profileEtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:editable="false"
                 android:enabled="false"
-                android:hint="@string/email_address" />
+                android:hint="@string/email_address"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -59,6 +66,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,10 +76,12 @@
                 android:id="@+id/profileEtAge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:hint="@string/age"
                 android:inputType="number"
                 android:maxLength="3"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RadioGroup
@@ -81,6 +91,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:background="@drawable/rounded_card_view"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,26 +101,31 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:text="@string/gender"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rbMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/male" />
+                android:text="@string/male"
+                android:textColor="@color/secondaryText" />
 
             <RadioButton
                 android:id="@+id/rbFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/female" />
+                android:text="@string/female"
+                android:textColor="@color/secondaryText" />
 
             <RadioButton
                 android:id="@+id/rbOther"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/other" />
+                android:text="@string/other"
+                android:textColor="@color/secondaryText" />
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -119,6 +135,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileRgGender">
@@ -127,10 +144,12 @@
                 android:id="@+id/profileEtWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:hint="@string/weight"
                 android:inputType="numberDecimal"
                 android:maxLength="5"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,7 +158,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
@@ -148,16 +169,19 @@
                 android:id="@+id/profileEtHeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:hint="@string/height_in_cms"
                 android:inputType="number|numberDecimal"
                 android:maxLength="3"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <RadioGroup
             android:id="@+id/profileRgGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_card_view"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4">
@@ -166,19 +190,23 @@
                 android:id="@+id/rbBuilding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/muscle_building" />
+                android:layout_marginEnd="100dp"
+                android:text="@string/muscle_building"
+                android:textColor="@color/secondaryText" />
 
             <RadioButton
                 android:id="@+id/rbLoss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/fat_loss" />
+                android:text="@string/fat_loss"
+                android:textColor="@color/secondaryText" />
 
             <RadioButton
                 android:id="@+id/rbFitness"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/fitness" />
+                android:text="@string/fitness"
+                android:textColor="@color/secondaryText" />
 
         </RadioGroup>
 
@@ -189,7 +217,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/fitness_goal"
-            android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout11" />
 
@@ -200,7 +228,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/diet_type"
-            android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileRgGoal" />
 
@@ -208,26 +236,32 @@
             android:id="@+id/profileRgDietType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_card_view"
+            app:layout_constraintStart_toStartOf="@+id/profileRgGoal"
             app:layout_constraintTop_toBottomOf="@+id/textView7">
 
             <RadioButton
                 android:id="@+id/rbVeg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vegetarian" />
+                android:text="Vegetarian"
+                android:textColor="@color/secondaryText" />
 
             <RadioButton
                 android:id="@+id/rbNonVeg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Non-vegetarian" />
+                android:layout_marginRight="100dp"
+                android:text="Non-vegetarian"
+                android:textColor="@color/secondaryText" />
 
             <RadioButton
                 android:id="@+id/rbBoth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Both" />
+                android:text="Both"
+                android:textColor="@color/secondaryText" />
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -237,17 +271,23 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileRgDietType">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout23">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/profileEtGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:editable="false"
+                android:enabled="false"
                 android:hint="Calories goal per day"
                 android:inputType="number"
-                android:maxLength="4" />
+                android:maxLength="4"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -257,11 +297,82 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:background="@drawable/rounded_button"
             android:text="@string/common_google_play_services_update_button"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout13" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout19"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColorHint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileRgDietType">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/profileEtProtein"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:editable="false"
+                android:enabled="false"
+                android:hint="Protein goal per day"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout22"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColorHint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout19">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/profileEtCarbs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:editable="false"
+                android:enabled="false"
+                android:hint="Carbs goal per day"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout23"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColorHint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout22">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/profileEtFats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:editable="false"
+                android:enabled="false"
+                android:hint="Fats goal per day"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

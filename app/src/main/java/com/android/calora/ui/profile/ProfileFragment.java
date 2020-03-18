@@ -3,6 +3,7 @@ package com.android.calora.ui.profile;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,9 @@ public class ProfileFragment extends Fragment {
     @BindView( R.id.profileEtAge ) EditText etAge;
     @BindView( R.id.profileEtWeight ) EditText etWeight;
     @BindView( R.id.profileEtHeight ) EditText etHeight;
+    @BindView( R.id.profileEtProtein ) EditText etProteinGoal;
+    @BindView( R.id.profileEtCarbs ) EditText etCarbsGoal;
+    @BindView( R.id.profileEtFats ) EditText etFatsGoal;
     @BindView( R.id.profileEtGoal ) EditText etCaloriesGoal;
     @BindView( R.id.profileRgGender ) RadioGroup rgGender;
     @BindView( R.id.profileRgGoal ) RadioGroup rgGoal;
@@ -56,8 +60,8 @@ public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;
     private String sUserName, sUserEmail, sUserGender="",sUserDietType="", sUserFitnessGoal="";
-    private float  fUserAge, fUserWeight, fUserHeight, fUserCaloriesGoal, fProtein=0, fCarbs=0,fFats=0, fBMR;
-    private String fbUserName,fbUserEmail, fbUserAge, fbUserWeight, fbUserHeight, fbUserCaloriesGoal, fbUserGender, fbUserDietType, fbUserFitnessGoal;
+    private float  fUserAge, fUserWeight, fUserHeight, fProtein=0, fCarbs=0,fFats=0, fBMR;
+    private String fbUserName,fbUserEmail, fbUserAge, fbUserWeight, fbUserHeight, fbUserCaloriesGoal, fbUserGender, fbUserDietType, fbUserFitnessGoal, fbUserProteinGoal,fbUserCarbsGoal, fbUserFatsGoal;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRefProfileInfo = database.getReference( Constants.FB_PROFILE_INFO );
@@ -71,77 +75,65 @@ public class ProfileFragment extends Fragment {
         ButterKnife.bind( this,root );
         mAuth = FirebaseAuth.getInstance();
         getSharedPreferenceData();
-        //if (!mAuth.getUid().isEmpty()) {
             fetchUserName = FirebaseDatabase.getInstance().getReference( Constants.FB_ACC_INFO ).orderByChild( Constants.FB_ACC_INFO_CHILD_EMAIL ).equalTo( sUserEmail );
             fetchUserName.addValueEventListener( fetchUserNameVLE );
 
             fetchUserProfile = FirebaseDatabase.getInstance().getReference( Constants.FB_PROFILE_INFO ).orderByKey().equalTo( mAuth.getUid() );
             fetchUserProfile.addValueEventListener( fetchUserProfileVLE );
-        btnUpdate.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (getProfileData())
-                {
-                    calulate();
-                    if (getCalories()) {
-                        updateUserProfile();
-                        if (!fbUserName.equals( sUserName )) {
-                            updateUserName();
-                        }
-                    }
+        btnUpdate.setOnClickListener( view -> {
+            if (getProfileData())
+            {
+                calculate();
+                updateUserProfile();
+                if (!fbUserName.equals( sUserName )) {
+                    updateUserName();
                 }
             }
         } );
-        rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rbMale:
-                        sUserGender = "Male";
-                        break;
-                    case R.id.rbFemale:
-                        sUserGender = "Female";
-                        break;
-                    case R.id.rbOther:
-                        sUserGender = "Other";
-                        break;
-                }
+        rgGender.setOnCheckedChangeListener( (group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.rbMale:
+                    sUserGender = "Male";
+                    break;
+                case R.id.rbFemale:
+                    sUserGender = "Female";
+                    break;
+                case R.id.rbOther:
+                    sUserGender = "Other";
+                    break;
             }
-        });
-        rgGoal.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rbBuilding:
-                        sUserFitnessGoal = "Muscle Building";
-                        break;
-                    case R.id.rbLoss:
-                        sUserFitnessGoal = "Fat Loss";
-                        break;
-                    case R.id.rbFitness:
-                        sUserFitnessGoal = "Fitness";
-                        break;
-                }
+        } );
+        rgGoal.setOnCheckedChangeListener( (group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.rbBuilding:
+                    sUserFitnessGoal = "Muscle Building";
+                    break;
+                case R.id.rbLoss:
+                    sUserFitnessGoal = "Fat Loss";
+                    break;
+                case R.id.rbFitness:
+                    sUserFitnessGoal = "Fitness";
+                    break;
             }
-        });
-        rgDietType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rbNonVeg:
-                        sUserDietType = "Non-vegetarian";
-                        break;
-                    case R.id.rbVeg:
-                        sUserDietType = "Vegetarian";
-                        break;
-                    case R.id.rbBoth:
-                        sUserDietType = "Both";
-                        break;
-                }
+        } );
+        rgDietType.setOnCheckedChangeListener( (group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.rbNonVeg:
+                    sUserDietType = "Non-vegetarian";
+                    break;
+                case R.id.rbVeg:
+                    sUserDietType = "Vegetarian";
+                    break;
+                case R.id.rbBoth:
+                    sUserDietType = "Both";
+                    break;
             }
-        });
+        } );
 
         return root;
     }
 
-    private void calulate() {
+    private void calculate() {
         if (sUserGender.equals( "Male" ))
             fBMR = (float) ((10 * fUserWeight) + (6.25 * fUserHeight) - (5 * fUserAge ) + 5);
         else
@@ -158,7 +150,7 @@ public class ProfileFragment extends Fragment {
                 fBMR *= 1.76;
                 break;
         }
-        etCaloriesGoal.setText(  fBMR+"" );
+        //etCaloriesGoal.setText(  String.valueOf( fBMR ) );
 
         fProtein = (fBMR/4)/4;
         fCarbs = (fBMR/3)/4;
@@ -166,6 +158,7 @@ public class ProfileFragment extends Fragment {
         fProtein = Float.parseFloat(String.format("%.0f",fProtein));
         fCarbs = Float.parseFloat(String.format("%.0f",fCarbs));
         fFats = Float.parseFloat(String.format("%.0f",fFats));
+        fBMR = Float.parseFloat(String.format("%.0f",fBMR));
     }
 
     private void updateUserName() {
@@ -174,7 +167,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updateUserProfile() {
-        FBProfileInfo fbProfileInfo = new FBProfileInfo( fUserAge, sUserGender, sUserFitnessGoal, sUserDietType,fUserWeight, fUserHeight, fUserCaloriesGoal, fProtein,fCarbs,fFats );
+        FBProfileInfo fbProfileInfo = new FBProfileInfo( fUserAge, sUserGender, sUserFitnessGoal, sUserDietType,fUserWeight, fUserHeight, fBMR, fProtein,fCarbs,fFats );
         myRefProfileInfo.child( Objects.requireNonNull( mAuth.getUid() ) ).setValue( fbProfileInfo );
         Toast.makeText( getContext(), "Profile updated", Toast.LENGTH_SHORT ).show();
     }
@@ -191,7 +184,7 @@ public class ProfileFragment extends Fragment {
                 etEmail.setText( fbUserEmail );
                 }
             catch (Exception e) {
-                Toast.makeText( getContext(), "Error, please try again", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
             }
         }
 
@@ -213,15 +206,23 @@ public class ProfileFragment extends Fragment {
                     fbUserFitnessGoal = postSnapshot.child( Constants.FB_PROFILE_INFO_CHILD_FITNESS_GOAL ).getValue()+"";
                     fbUserDietType = postSnapshot.child( Constants.FB_PROFILE_INFO_CHILD_DIET_TYPE ).getValue()+"";
                     fbUserCaloriesGoal = postSnapshot.child( Constants.FB_PROFILE_INFO_CHILD_CALORIES_GOAL ).getValue()+"";
+                    fbUserProteinGoal = postSnapshot.child( Constants.FB_PROTEIN ).getValue()+"";
+                    fbUserCarbsGoal = postSnapshot.child( Constants.FB_CARBS ).getValue()+"";
+                    fbUserFatsGoal = postSnapshot.child( Constants.FB_FATS ).getValue()+"";
                 }
                 etAge.setText( fbUserAge );
                 etHeight.setText( fbUserHeight );
                 etWeight.setText( fbUserWeight );
                 etCaloriesGoal.setText( fbUserCaloriesGoal );
+                etProteinGoal.setText( fbUserProteinGoal );
+                etCarbsGoal.setText( fbUserCarbsGoal );
+                etFatsGoal.setText( fbUserFatsGoal );
                 setRadioGroups();
             }
             catch (Exception e) {
-                Toast.makeText( getContext(), "Error, please try again", Toast.LENGTH_SHORT ).show();
+                Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
+                Log.e( "=======PROFILE", e.toString() );
+                Log.e( "=======PROFILE_MESSAGE", e.getMessage() );
             }
         }
 
@@ -338,20 +339,7 @@ public class ProfileFragment extends Fragment {
     private boolean getFitnessGoal() {
         return !sUserFitnessGoal.isEmpty();
     }
-    private boolean getCalories() {
-        if (etCaloriesGoal.getText().toString().isEmpty())
-        {
-            etCaloriesGoal.setError( "Please enter calories goal per day" );
-            return false;
-        }
-        else if (Integer.parseInt( etCaloriesGoal.getText().toString() ) > 10000)
-        {
-            etCaloriesGoal.setError( "Please enter a valid calories goal" );
-            return false;
-        }
-        fUserCaloriesGoal = Float.parseFloat( etCaloriesGoal.getText().toString());
-        return true;
-    }
+
     private void getSharedPreferenceData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences( Constants.SP_LOGIN_CREDENTIALS, Context.MODE_PRIVATE);
         sUserEmail= sharedPreferences.getString(Constants.SP_EMAIL, "");

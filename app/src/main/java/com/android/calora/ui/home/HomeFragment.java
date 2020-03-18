@@ -89,7 +89,13 @@ public class HomeFragment extends Fragment {
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         date = df.format(c);
+
         tvWaterGoal.setText( getString( R.string._2500_ml ) );
+        tvProteinGoal.setText( getString( R.string._0g ));
+        tvCarbsGoal.setText( getString( R.string._0g ));
+        tvFatsGoal.setText( getString( R.string._0g ));
+        tvCaloriesGoal.setText(getString( R.string._0_cal ));
+
         queryConsumedMealData = FirebaseDatabase.getInstance().getReference( Constants.FB_CONSUMED_MEAL ).child( mAuth.getUid() ).child( date );
         queryConsumedMealData.addValueEventListener( getConsumedMealData );
 
@@ -243,10 +249,14 @@ public class HomeFragment extends Fragment {
                 fbCarbsGoal = Float.parseFloat( dataSnapshot.child( Constants.FB_FATS ).getValue() + "");
                 fbCaloriesGoal = Float.parseFloat( dataSnapshot.child( Constants.FB_PROFILE_INFO_CHILD_CALORIES_GOAL ).getValue() + "");
 
-                tvProteinGoal.setText( String.format("%.0f",fbProteinGoal)+getString( R.string._g ));
-                tvCarbsGoal.setText( String.format("%.0f",fbCarbsGoal)+getString( R.string._g ));
-                tvFatsGoal.setText( String.format("%.0f",fbFatsGoal)+getString( R.string._g ));
-                tvCaloriesGoal.setText( String.format("%.0f",fbCaloriesGoal)+getString( R.string._g ));
+                String temp = String.format(getString( R.string._0f ),fbProteinGoal)+getString( R.string._g );
+                tvProteinGoal.setText( temp);
+                temp = String.format(getString( R.string._0f ),fbCarbsGoal)+getString( R.string._g );
+                tvCarbsGoal.setText( temp);
+                temp = String.format(getString( R.string._0f ),fbCarbsGoal)+getString( R.string._g );
+                tvFatsGoal.setText( temp);
+                temp = String.format(getString( R.string._0f ),fbCaloriesGoal)+getString( R.string._cal );
+                tvCaloriesGoal.setText( temp);
 
 
                 serProgressMax();
