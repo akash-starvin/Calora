@@ -53,13 +53,6 @@ public class Constants {
     public static final String FB_USER_CREATED_MEAL_LIST_FOOD_ITEMS = "foodItems";
     public static final String FB_USER_CREATED_MEAL_LIST_TIME = "time";
 
-    public static final String FB_USER_DAY_MEALS = "Day Meals";
-    public static final String FB_USER_DAY_MEALS_NAME = "mealName";
-    public static final String FB_USER_DAY_MEALS_TIME = "time";
-    public static final String FB_USER_DAY_MEALS_DATE = "date";
-    public static final String FB_USER_DAY_MEALS_CALORIES_CONSUMED = "calConsumed";
-    public static final String FB_USER_DAY_MEALS_CALORIES_GOAL = "calGoal";
-    public static final String FB_USER_DAY_MEALS_STATUS = "status";
 
     public static final String FB_CONSUMED_MEAL = "Consumed Meal";
 

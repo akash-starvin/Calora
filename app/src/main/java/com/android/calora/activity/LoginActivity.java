@@ -3,6 +3,7 @@ package com.android.calora.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -35,7 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView( R.id.etLogEmail ) EditText etEmail;
     @BindView( R.id.etLogPassword ) EditText etPassword;
     @BindView( R.id.btnLogin ) Button btnLogin;
-    @BindView( R.id.tvLogNewUser ) TextView tvLogNewUser;
+    @BindView( R.id.btnNewUser ) Button btnNewUser;
+    @BindView( R.id.tvForgotPassword ) TextView tvForgot;
     private String sUserEmail, sUserPassword;
     private Query checkEmailExistQuery;
     private FirebaseAuth mAuth;
@@ -50,66 +52,57 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         getSharedPreferenceData();
 
-        btnLogin.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (getUserData())
+        btnLogin.setOnClickListener( view -> {
+            if (getUserData())
+            {
+                if(checkInternet())
                 {
-                    if(checkInternet())
-                    {
-                        checkEmailExistQuery = FirebaseDatabase.getInstance().getReference( Constants.FB_ACC_INFO ).orderByChild( Constants.FB_ACC_INFO_CHILD_EMAIL ).equalTo( sUserEmail );
-                        checkEmailExistQuery.addValueEventListener( checkEmailExistVLE );
-                    }
-                    else
-                        Snackbar.make( view,"No internet connection", Snackbar.LENGTH_LONG ).show();
+                    checkEmailExistQuery = FirebaseDatabase.getInstance().getReference( Constants.FB_ACC_INFO ).orderByChild( Constants.FB_ACC_INFO_CHILD_EMAIL ).equalTo( sUserEmail );
+                    checkEmailExistQuery.addValueEventListener( checkEmailExistVLE );
                 }
+                else
+                    Snackbar.make( view,getString( R.string.no_internet ), Snackbar.LENGTH_LONG ).show();
             }
         } );
-
-        tvLogNewUser.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent( getApplicationContext(), CreateAccountActivity.class );
-                startActivity( intent );
-            }
+        btnNewUser.setOnClickListener( view -> {
+            Intent intent = new Intent( getApplicationContext(), CreateAccountActivity.class );
+            startActivity( intent );
+        } );
+        tvForgot.setOnClickListener( view -> {
+            //TODO
         } );
 
     }
 
     final ValueEventListener checkEmailExistVLE = new ValueEventListener() {
         @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             try {
                 if (!dataSnapshot.hasChildren()) {
-                    etEmail.setError( "Email isn't registered" );
+                    etEmail.setError( getString( R.string.email_isnt_registered ));
                 } else {
-                    //checkEmailExistQuery.removeEventListener( checkEmailExistVLE );
-
                     signInUser();
                 }
-            } catch (Exception e) {
-                Toast.makeText( getApplicationContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
+            } catch (Exception ignored) {
+
             }
         }
 
         @Override
-        public void onCancelled(DatabaseError databaseError) {
+        public void onCancelled(@NonNull DatabaseError databaseError) {
 
         }
     };
 
     private void signInUser() {
         mAuth.signInWithEmailAndPassword(sUserEmail,sUserPassword)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            saveUserDataInSharedPreference();
-                        } else {
-                            Toast.makeText( getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT ).show();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        saveUserDataInSharedPreference();
+                    } else {
+                        Toast.makeText( getApplicationContext(), getString( R.string.error_loging_in ), Toast.LENGTH_SHORT ).show();
                     }
-                });
+                } );
     }
 
     private boolean getUserData() {
@@ -119,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean getEmail() {
         if(etEmail.getText().toString().isEmpty())
         {
-            etEmail.setError( "Please enter email" );
+            etEmail.setError( getString( R.string.enter_valid_email) );
             return false;
         }
         else {
@@ -131,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean getPassword() {
         if(etPassword.getText().toString().isEmpty())
         {
-            etPassword.setError( "Please enter password" );
+            etPassword.setError( getString( R.string.enter_password) );
             return false;
         }
         else {
@@ -151,17 +144,17 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putString( Constants.SP_EMAIL, sUserEmail);
         myEdit.putString( Constants.SP_PASSWORD, sUserPassword);
-        myEdit.commit();
+        myEdit.apply();
         Intent intent =  new Intent( getApplicationContext(), HomeActivity.class );
         startActivity( intent );
-        Toast.makeText( LoginActivity.this, "Logged in "+mAuth.getUid(), Toast.LENGTH_SHORT ).show();
+        Toast.makeText( LoginActivity.this, getString( R.string.logged_in), Toast.LENGTH_SHORT ).show();
     }
     private boolean checkInternet()
     {
-        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(getApplicationContext().CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService( CONNECTIVITY_SERVICE);
+        assert cm != null;
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-        return isConnected;
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
 }

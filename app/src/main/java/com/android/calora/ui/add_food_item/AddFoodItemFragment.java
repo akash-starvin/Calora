@@ -43,9 +43,9 @@ public class AddFoodItemFragment extends Fragment {
     private AddFoodItemViewModel slideshowViewModel;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference refAddFoodItem = database.getReference( Constants.FB_USER_FOOD_ITEM_LIST );
-    String [] arrayValues = {"Select unit of measure","30g","100g","100ml","1pc"};
-    String [] arrayMeasure = {"30","100","100","1"};
-    String [] arrayUnits = {"g","g","ml","pc"};
+    private String [] arrayValues = {"Select unit of measure","30g","100g","100ml","1pc"};
+    private String [] arrayMeasure = {"30","100","100","1"};
+    private String [] arrayUnits = {"g","g","ml","pc"};
     private int spinnerPosition ;
     private FirebaseAuth mAuth;
 
@@ -56,16 +56,13 @@ public class AddFoodItemFragment extends Fragment {
         setSpinner();
         mAuth = FirebaseAuth.getInstance();
 
-        btnAddMeal.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(getMealData())
+        btnAddMeal.setOnClickListener( view -> {
+            if(getMealData())
+            {
+                if (checkInternet())
                 {
-                    if (checkInternet())
-                    {
-                        saveMeal();
-                        clearFields();
-                    }
+                    saveMeal();
+                    clearFields();
                 }
             }
         } );
@@ -92,7 +89,7 @@ public class AddFoodItemFragment extends Fragment {
 
         FbAddFoodItem fbAddFoodItem = new FbAddFoodItem( sName, unit , dProtien,dCarbs, dFats,dCalories, measure);
         refAddFoodItem.child( mAuth.getUid() ).push().setValue( fbAddFoodItem );
-        Toast.makeText( getActivity(), "Saved food item", Toast.LENGTH_SHORT ).show();
+        Toast.makeText( getActivity(), getString( R.string.added ), Toast.LENGTH_SHORT ).show();
     }
 
     private boolean checkInternet()
@@ -100,8 +97,7 @@ public class AddFoodItemFragment extends Fragment {
         ConnectivityManager cm = (ConnectivityManager) Objects.requireNonNull( getActivity() ).getSystemService( Context.CONNECTIVITY_SERVICE );
         assert cm != null;
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-        return isConnected;
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
     private boolean getMealData() {
@@ -110,12 +106,12 @@ public class AddFoodItemFragment extends Fragment {
 
     private boolean getUnit() {
         if (spinnerUnit.getSelectedItem().equals( "Select unit of measure" ) ) {
-            Toast.makeText( getActivity(), "Please select unit of measure for this food item", Toast.LENGTH_SHORT ).show();
+            Toast.makeText( getActivity(), getString( R.string.select_measure_for_this_food_item ), Toast.LENGTH_SHORT ).show();
             return false;
         }
         spinnerPosition = spinnerUnit.getSelectedItemPosition() - 1;
         sUnit = spinnerUnit.getSelectedItem().toString();
-        Toast.makeText( getActivity(), spinnerPosition+"", Toast.LENGTH_SHORT ).show();
+        Toast.makeText( getActivity(), spinnerPosition, Toast.LENGTH_SHORT ).show();
 
         return true;
     }
@@ -123,7 +119,7 @@ public class AddFoodItemFragment extends Fragment {
     private boolean getName() {
         if(etName.getText().toString().isEmpty())
         {
-            etName.setError( "Enter food item name" );
+            etName.setError( getString( R.string.enter_food_item) );
             return false;
         }
         sName = etName.getText().toString();
@@ -133,7 +129,7 @@ public class AddFoodItemFragment extends Fragment {
     private boolean getProtein() {
         if(etProtein.getText().toString().isEmpty())
         {
-            etProtein.setError( "Enter protein" );
+            etProtein.setError( getString( R.string.enter_protein) );
             return false;
         }
         dProtien = Double.parseDouble( etProtein.getText().toString() );
@@ -143,7 +139,7 @@ public class AddFoodItemFragment extends Fragment {
     private boolean getCarbs() {
         if(etCarbs.getText().toString().isEmpty())
         {
-            etCarbs.setError( "Enter carbs" );
+            etCarbs.setError( getString( R.string.enter_carbs) );
             return false;
         }
         dCarbs = Double.parseDouble(etCarbs.getText().toString());
@@ -153,7 +149,7 @@ public class AddFoodItemFragment extends Fragment {
     private boolean getFats() {
         if(etFats.getText().toString().isEmpty())
         {
-            etFats.setError( "Enter fats" );
+            etFats.setError(getString( R.string.enter_fats)  );
             return false;
         }
         dFats = Double.parseDouble(etFats.getText().toString());
@@ -163,7 +159,7 @@ public class AddFoodItemFragment extends Fragment {
     private boolean getCalories() {
         if(etCalories.getText().toString().isEmpty())
         {
-            etCalories.setError( "Enter calories" );
+            etCalories.setError(getString( R.string.enter_calories)  );
             return false;
         }
         dCalories = Double.parseDouble( etCalories.getText().toString());

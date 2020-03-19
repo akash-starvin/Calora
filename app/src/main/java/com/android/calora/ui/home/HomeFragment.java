@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.calora.Constants;
 import com.android.calora.DetailActivity;
 import com.android.calora.DetailedWidget;
-import com.android.calora.HomeAdapter;
+import com.android.calora.adapter.HomeAdapter;
 import com.android.calora.HomeModel;
 import com.android.calora.MealListActivity;
 import com.android.calora.R;
@@ -42,11 +41,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends Fragment {
 
@@ -87,7 +85,7 @@ public class HomeFragment extends Fragment {
         ButterKnife.bind( this,root );
         mAuth = FirebaseAuth.getInstance();
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         date = df.format(c);
 
         tvWaterGoal.setText( getString( R.string._2500_ml ) );
@@ -130,6 +128,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
     private ValueEventListener getAllConsumedMealData = new ValueEventListener() {
+        @SuppressLint("DefaultLocale")
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             try {
@@ -164,8 +163,8 @@ public class HomeFragment extends Fragment {
                 recyclerView.setItemAnimator( new DefaultItemAnimator() );
                 recyclerView.setAdapter( homeAdapter );
             }
-            catch (Exception e) {
-                Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
+            catch (Exception ignored) {
+
             }
         }
 
@@ -183,16 +182,15 @@ public class HomeFragment extends Fragment {
                 progressBarWater.setProgress( fbWater );
                 progressBarWater.setMax( 10 );
                 fbWater *= 250;
-                tvWater.setText(  fbWater+getString( R.string._ml ) );
+                tvWater.setText( fbWater + getString( R.string._ml ) );
 
             }
-            catch (Exception e) {
-                Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
+            catch (Exception ignored) {
             }
         }
 
         @Override
-        public void onCancelled(DatabaseError databaseError) {
+        public void onCancelled(@NonNull DatabaseError databaseError) {
 
         }
     };
@@ -214,13 +212,12 @@ public class HomeFragment extends Fragment {
                 setProgressStart();
                 updateMyWidget(String.valueOf(  fbProtein),String.valueOf(  fbCarbs),String.valueOf(  fbFats),String.valueOf(  fbCalories));
             }
-            catch (Exception e) {
-                Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
+            catch (Exception ignored) {
             }
         }
 
         @Override
-        public void onCancelled(DatabaseError databaseError) {
+        public void onCancelled(@NonNull DatabaseError databaseError) {
 
         }
     };
@@ -231,13 +228,13 @@ public class HomeFragment extends Fragment {
         int appWidgetId = bundle.getInt(
                 AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(Constants.SP_WIDGET, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = Objects.requireNonNull( this.getActivity() ).getSharedPreferences(Constants.SP_WIDGET, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String data = "Protein - "+protein+"\nCarbs - "+carbs+"\nFats - "+fats+"\nCalories - "+calories;
         editor.putString( Constants.SP_DATA,  data);
-        editor.commit();
+        editor.apply();
 
-        DetailedWidget.updateAppWidget(getContext(), appWidgetManager, appWidgetId);
+        DetailedWidget.updateAppWidget( Objects.requireNonNull( getContext() ), appWidgetManager, appWidgetId);
     }
 
     private ValueEventListener getGoalData = new ValueEventListener() {
@@ -262,23 +259,24 @@ public class HomeFragment extends Fragment {
                 serProgressMax();
                 setProgressStart();
             }
-            catch (Exception e) {
-                Toast.makeText( getContext(), "Error, please try again", Toast.LENGTH_SHORT ).show();
+            catch (Exception ignored) {
             }
         }
 
         @Override
-        public void onCancelled(DatabaseError databaseError) {
+        public void onCancelled(@NonNull DatabaseError databaseError) {
 
         }
     };
 
+    @SuppressLint("DefaultLocale")
     private void setProgressStart() {
         progressBarProtein.setProgress( Integer.parseInt( String.format("%.0f",fbProtein) ) );
         progressBarCarbs.setProgress( Integer.parseInt( String.format("%.0f",fbCarbs) ) );
         progressBarFats.setProgress( Integer.parseInt( String.format("%.0f",fbFats) ) );
         progressBarCalories.setProgress( Integer.parseInt( String.format("%.0f",fbCalories) ) );
     }
+    @SuppressLint("DefaultLocale")
     private void serProgressMax() {
         progressBarProtein.setMax( Integer.parseInt( String.format("%.0f",fbProteinGoal) ) );
         progressBarCarbs.setMax( Integer.parseInt( String.format("%.0f",fbCarbsGoal) ) );

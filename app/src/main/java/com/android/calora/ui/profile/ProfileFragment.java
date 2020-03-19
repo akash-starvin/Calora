@@ -1,5 +1,6 @@
 package com.android.calora.ui.profile;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -93,39 +94,39 @@ public class ProfileFragment extends Fragment {
         rgGender.setOnCheckedChangeListener( (group, checkedId) -> {
             switch (checkedId) {
                 case R.id.rbMale:
-                    sUserGender = "Male";
+                    sUserGender = getString(  R.string.male);
                     break;
                 case R.id.rbFemale:
-                    sUserGender = "Female";
+                    sUserGender = getString(  R.string.female);
                     break;
                 case R.id.rbOther:
-                    sUserGender = "Other";
+                    sUserGender = getString(  R.string.other);
                     break;
             }
         } );
         rgGoal.setOnCheckedChangeListener( (group, checkedId) -> {
             switch (checkedId) {
                 case R.id.rbBuilding:
-                    sUserFitnessGoal = "Muscle Building";
+                    sUserFitnessGoal = getString(  R.string.muscle_building);
                     break;
                 case R.id.rbLoss:
-                    sUserFitnessGoal = "Fat Loss";
+                    sUserFitnessGoal = getString(  R.string.fat_loss);
                     break;
                 case R.id.rbFitness:
-                    sUserFitnessGoal = "Fitness";
+                    sUserFitnessGoal = getString(  R.string.fitness);
                     break;
             }
         } );
         rgDietType.setOnCheckedChangeListener( (group, checkedId) -> {
             switch (checkedId) {
                 case R.id.rbNonVeg:
-                    sUserDietType = "Non-vegetarian";
+                    sUserDietType = getString(  R.string.non_vegetarian);
                     break;
                 case R.id.rbVeg:
-                    sUserDietType = "Vegetarian";
+                    sUserDietType = getString(  R.string.vegetarian);
                     break;
                 case R.id.rbBoth:
-                    sUserDietType = "Both";
+                    sUserDietType = getString(  R.string.both);
                     break;
             }
         } );
@@ -133,6 +134,7 @@ public class ProfileFragment extends Fragment {
         return root;
     }
 
+    @SuppressLint("DefaultLocale")
     private void calculate() {
         if (sUserGender.equals( "Male" ))
             fBMR = (float) ((10 * fUserWeight) + (6.25 * fUserHeight) - (5 * fUserAge ) + 5);
@@ -169,7 +171,7 @@ public class ProfileFragment extends Fragment {
     private void updateUserProfile() {
         FBProfileInfo fbProfileInfo = new FBProfileInfo( fUserAge, sUserGender, sUserFitnessGoal, sUserDietType,fUserWeight, fUserHeight, fBMR, fProtein,fCarbs,fFats );
         myRefProfileInfo.child( Objects.requireNonNull( mAuth.getUid() ) ).setValue( fbProfileInfo );
-        Toast.makeText( getContext(), "Profile updated", Toast.LENGTH_SHORT ).show();
+        Toast.makeText( getContext(), getString(R.string.profile_updated), Toast.LENGTH_SHORT ).show();
     }
 
     private ValueEventListener fetchUserNameVLE = new ValueEventListener() {
@@ -184,7 +186,7 @@ public class ProfileFragment extends Fragment {
                 etEmail.setText( fbUserEmail );
                 }
             catch (Exception e) {
-                Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
+                Toast.makeText( getContext(), getString( R.string.no_data_available ), Toast.LENGTH_SHORT ).show();
             }
         }
 
@@ -219,10 +221,7 @@ public class ProfileFragment extends Fragment {
                 etFatsGoal.setText( fbUserFatsGoal );
                 setRadioGroups();
             }
-            catch (Exception e) {
-                Toast.makeText( getContext(), "Error, please try again"+e.toString(), Toast.LENGTH_SHORT ).show();
-                Log.e( "=======PROFILE", e.toString() );
-                Log.e( "=======PROFILE_MESSAGE", e.getMessage() );
+            catch (Exception ignored) {
             }
         }
 
@@ -287,7 +286,7 @@ public class ProfileFragment extends Fragment {
     private boolean getName() {
         if(etName.getText().toString().isEmpty())
         {
-            etName.setError( "Please enter name" );
+            etName.setError( getString( R.string.enter_full_name ) );
             return false;
         }
         sUserName = etName.getText().toString();
@@ -296,7 +295,7 @@ public class ProfileFragment extends Fragment {
     private boolean getAge() {
         if(etAge.getText().toString().isEmpty())
         {
-            etAge.setError( "Please enter age" );
+            etAge.setError( getString( R.string.enter_age ));
             return false;
         }
         fUserAge = Float.parseFloat(  etAge.getText().toString());
@@ -308,12 +307,12 @@ public class ProfileFragment extends Fragment {
     private boolean getWeight() {
         if (etWeight.getText().toString().isEmpty())
         {
-            etWeight.setError( "Please enter weight" );
+            etWeight.setError( getString( R.string.enter_weight) );
             return false;
         }
         else if (Float.parseFloat( etWeight.getText().toString() ) > 400)
         {
-            etWeight.setError( "Please enter a valid weight" );
+            etWeight.setError( getString( R.string.enter_valid_weight) );
             return false;
         }
         fUserWeight = Float.parseFloat(  etWeight.getText().toString());
@@ -322,12 +321,12 @@ public class ProfileFragment extends Fragment {
     private boolean getHeight() {
         if (etHeight.getText().toString().isEmpty())
         {
-            etHeight.setError( "Please enter height" );
+            etHeight.setError( getString( R.string.enter_height ) );
             return false;
         }
         else if (Integer.parseInt( etHeight.getText().toString() ) > 250)
         {
-            etHeight.setError( "Please enter a valid height" );
+            etHeight.setError( getString( R.string.enter_valid_height));
             return false;
         }
         fUserHeight = Float.parseFloat( etHeight.getText().toString());
@@ -341,7 +340,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getSharedPreferenceData() {
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences( Constants.SP_LOGIN_CREDENTIALS, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = Objects.requireNonNull( this.getActivity() ).getSharedPreferences( Constants.SP_LOGIN_CREDENTIALS, Context.MODE_PRIVATE);
         sUserEmail= sharedPreferences.getString(Constants.SP_EMAIL, "");
     }
 }

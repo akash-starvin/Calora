@@ -21,6 +21,22 @@
     <string name="menu_create_meal">Create your meal</string>
     <string name="menu_logout">Logout</string>
 
+    <string name="email_isnt_registered">Email address is not registered</string>
+    <string name="email_already_registered">Email address is already registered, login using this email</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="account_created">Account created</string>
+    <string name="enter_full_name">Enter full name</string>
+    <string name="enter_valid_email">Enter a valid email address</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_confirm_password">Enter confirm password</string>
+    <string name="minimum_6_chars">Minimum 6 characters</string>
+    <string name="password_doesnt_match">Password does not match</string>
+
+    <string name="error_creating_account">Error in creating account</string>
+    <string name="forgot_password">Forgot password ?</string>
+    <string name="error_loging_in">Error logging in</string>
+    <string name="logged_in">Logged in</string>
+
     <string name="home_second">Home Second</string>
     <string name="profile">Profile</string>
     <string name="age">Age</string>
@@ -55,6 +71,7 @@
     <string name="save">Save</string>
     <string name="selected_food_items">Selected food items</string>
     <string name="add_food_item_to_list">Add food item to list</string>
+    <string name="add_food_item_to_list_first">Add food item to list first</string>
     <string name="save_meal">Save Meal</string>
     <string name="meal_name">Meal name</string>
     <string name="_0g">0g</string>
@@ -77,7 +94,43 @@
     <string name="quantity_of_selected_food_item">Quantity of selected food item</string>
     <string name="this_month">  This Month</string>
     <string name="select_food_item_type">Select food item type</string>
-    <string name="select_food_item" />
-    <string name="select_food_time" />
+
+    <string name="select_food_item">Select food item</string>
+    <string name="select_food_time">Select food time</string>
+    <string name="create_your_meal">Create a meal</string>
+    <string name="added">added</string>
+    <string name="select_measure_for_this_food_item">Select unit of measure for this food item</string>
+    <string name="enter_food_item">Enter food item name</string>
+    <string name="enter_protein">Enter protein</string>
+    <string name="enter_carbs">Enter carbs</string>
+    <string name="enter_fats">Enter fat</string>
+    <string name="enter_calories">Enter calories</string>
+    <string name="no_data_available">No data available</string>
+    <string name="non_vegetarian">Non-vegetarian</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="both">Both</string>
+    <string name="profile_updated">Profile updated</string>
+    <string name="enter_age">Enter age</string>
+    <string name="enter_weight">Enter weight</string>
+    <string name="enter_valid_weight">Enter valid weight</string>
+    <string name="enter_height">Enter height</string>
+    <string name="enter_valid_height">Enter valid height</string>
+    <string name="max_five_food_items">Maximum 5 food items in a meal</string>
+    <string name="meal_added">Meal added</string>
+    <string name="enter_quantity">Enter quantity</string>
+    <string name="enter_meal_name">Enter meal name</string>
+    <string name="add_food_item_to_see_them_here">Add food item to see them here</string>
+    <string name="added_a_glass_of_water">Added a glass of water</string>
+    <string name="exceeded_num_of_glasses">You\'ve exceeded maximum number of glasses</string>
+    <string name="decremented_a_glass">Decremented glass of water</string>
+    <string name="can_not_decrement">Can\'t decrement</string>
+    <string name="you_already_had_this_meal">You already had this meal</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="dinner">Dinner</string>
+    <string name="snack3">Snack 3</string>
+    <string name="snack2">Snack 2</string>
+    <string name="lunch">Lunch</string>
+    <string name="snack1">Snack1</string>
+    <string name="you_selected">You selected</string>
 
 </resources>
