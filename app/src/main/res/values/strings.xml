@@ -132,5 +132,46 @@
     <string name="lunch">Lunch</string>
     <string name="snack1">Snack1</string>
     <string name="you_selected">You selected</string>
+    <string name="how_to_use">How to use</string>
+    <string name="logged_out">Logged out</string>
+    <string name="step1">Step 1</string>
+    <string name="step2">Step 2</string>
 
+    <string name="settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="leave_a_message">Leave me a message</string>
+    <string name="version">Version</string>
+    <string name="app_version">App Version</string>
+    <string name="_1_0">1.0</string>
+    <string name="report_a_bug">Report a bug</string>
+    <string name="click_here_to_report_any_problem">Click here to report any problem</string>
+    <string name="contact">Contact</string>
+    <string name="view_linked_in">View Linked-in profile</string>
+    <string name="linked_in_url">www.linkedin.com/in/akash-starvin/</string>
+    <string name="dev_email">Akashstarvin999@gmail.com</string>
+    <string name="dev_name">Akash Starvin D\'souza</string>
+    <string name="dev_section">Developer Section</string>
+    <string name="enter_registred_email">Enter your registered email id</string>
+    <string name="reset_email_sent">Reset email has been sent</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="email_will_be_sent">An email will be sent to the registered email Id</string>
+    <string name="email_id">Email Id</string>
 </resources>

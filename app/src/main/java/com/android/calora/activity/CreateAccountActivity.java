@@ -40,7 +40,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     @BindView(R.id.etCaEmail) EditText etEmail;
     @BindView(R.id.etCaPassword) EditText etPassword;
     @BindView(R.id.etCaConfirmPassword) EditText etConfirmPassword;
-    @BindView(R.id.btnAlreadyHaveAccount) Button btnHaveAccount;
 
     private String sUserName, sUserEmail, sUserPassword;
     private FirebaseAuth mAuth;
@@ -70,11 +69,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             }
         } );
-        btnHaveAccount.setOnClickListener( view -> {
-            Intent intent = new Intent( getApplicationContext(),  LoginActivity.class );
-            startActivity( intent );
-        } );
-
     }
     ValueEventListener checkEmailExistVLE = new ValueEventListener() {
         @Override

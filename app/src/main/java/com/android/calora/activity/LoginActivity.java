@@ -1,18 +1,23 @@
 package com.android.calora.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,7 +74,35 @@ public class LoginActivity extends AppCompatActivity {
             startActivity( intent );
         } );
         tvForgot.setOnClickListener( view -> {
-            //TODO
+            final AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            final EditText input = new EditText(LoginActivity.this);
+            input.setInputType( InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
+            input.setHint(getString( R.string.email_id));
+            FrameLayout container = new FrameLayout(LoginActivity.this);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dp_19);
+            params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dp_19);
+            input.setLayoutParams(params);
+            container.addView(input);
+            builder.setTitle(getString( R.string.reset_password));
+            builder.setMessage(getString( R.string.email_will_be_sent));
+            builder.setView(container);
+            builder.setPositiveButton(getString( R.string.ok), (dialog, which) -> {
+                if (input.getText().toString().isEmpty()) {
+                    Toast.makeText( getApplicationContext(), getString( R.string.enter_registred_email ), Toast.LENGTH_LONG ).show();
+                }
+                else {
+                    String email = input.getText().toString();
+                    FirebaseAuth.getInstance().sendPasswordResetEmail( email ).addOnCompleteListener( task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText( getApplicationContext(), getString( R.string.reset_email_sent), Toast.LENGTH_LONG ).show();
+                        } else
+                            Toast.makeText( getApplicationContext(), getString( R.string.something_went_wrong), Toast.LENGTH_LONG ).show();
+                    } );
+                }
+            } );
+            builder.setNegativeButton(getString( R.string.cancel), (dialog, which) -> dialog.cancel() );
+            builder.show();
         } );
 
     }

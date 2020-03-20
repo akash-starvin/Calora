@@ -64,6 +64,7 @@ public class Constants {
     public static final String SP_EMAIL = "spUserEmail";
     public static final String SP_PASSWORD = "spUserPassword";
 
+    public static final String SETTINGS_PREFERENCE = "settings_pref";
 
     //shared preferences
     public static final String SP_WIDGET = "Widget";
