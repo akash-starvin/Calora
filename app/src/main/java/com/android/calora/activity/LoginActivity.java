@@ -52,16 +52,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_login );
         ButterKnife.bind( this );
-
+        getSupportActionBar().hide();
         FirebaseAuth.getInstance().signOut();
         mAuth = FirebaseAuth.getInstance();
         getSharedPreferenceData();
-
+        btnLogin.setEnabled( true );
         btnLogin.setOnClickListener( view -> {
             if (getUserData())
             {
                 if(checkInternet())
                 {
+                    btnLogin.setEnabled( false );
                     checkEmailExistQuery = FirebaseDatabase.getInstance().getReference( Constants.FB_ACC_INFO ).orderByChild( Constants.FB_ACC_INFO_CHILD_EMAIL ).equalTo( sUserEmail );
                     checkEmailExistQuery.addValueEventListener( checkEmailExistVLE );
                 }
@@ -113,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 if (!dataSnapshot.hasChildren()) {
                     etEmail.setError( getString( R.string.email_isnt_registered ));
+                    btnLogin.setEnabled( true );
                 } else {
                     signInUser();
                 }
@@ -131,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(sUserEmail,sUserPassword)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        btnLogin.setEnabled( true );
                         saveUserDataInSharedPreference();
                     } else {
                         Toast.makeText( getApplicationContext(), getString( R.string.error_loging_in ), Toast.LENGTH_SHORT ).show();

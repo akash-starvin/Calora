@@ -9,20 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.LoginActivity"/>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"/>
+            android:name=".activity.SettingsActivity"
+            android:parentActivityName=".activity.HomeActivity"
+            android:label="@string/title_activity_settings" />
 
         <receiver android:name=".DetailedWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/detailed_widget_info" />
         </receiver>
 
-        <activity android:name=".DetailActivity" />
+        <activity android:name=".DetailActivity"
+            android:parentActivityName=".activity.HomeActivity"/>
         <activity
             android:name=".SelectedMealActivity"
             android:parentActivityName=".MealListActivity" />
@@ -36,7 +40,7 @@
             android:name=".activity.CreateAccountActivity"
             android:parentActivityName=".activity.LoginActivity" />
 
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

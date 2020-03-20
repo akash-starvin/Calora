@@ -88,7 +88,7 @@ public class AddFoodItemFragment extends Fragment {
         dCalories = (double) Math.round( dCalories * 100 )/100;
 
         FbAddFoodItem fbAddFoodItem = new FbAddFoodItem( sName, unit , dProtien,dCarbs, dFats,dCalories, measure);
-        refAddFoodItem.child( mAuth.getUid() ).push().setValue( fbAddFoodItem );
+        refAddFoodItem.child( Objects.requireNonNull( mAuth.getUid() ) ).push().setValue( fbAddFoodItem );
         Toast.makeText( getActivity(), getString( R.string.added ), Toast.LENGTH_SHORT ).show();
     }
 
@@ -111,7 +111,6 @@ public class AddFoodItemFragment extends Fragment {
         }
         spinnerPosition = spinnerUnit.getSelectedItemPosition() - 1;
         sUnit = spinnerUnit.getSelectedItem().toString();
-        Toast.makeText( getActivity(), spinnerPosition, Toast.LENGTH_SHORT ).show();
 
         return true;
     }

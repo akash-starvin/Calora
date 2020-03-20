@@ -2,6 +2,7 @@ package com.android.calora.ui.home;
 
 import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -211,6 +213,7 @@ public class HomeFragment extends Fragment {
                 serProgressMax();
                 setProgressStart();
                 updateMyWidget(String.valueOf(  fbProtein),String.valueOf(  fbCarbs),String.valueOf(  fbFats),String.valueOf(  fbCalories));
+
             }
             catch (Exception ignored) {
             }
@@ -223,18 +226,21 @@ public class HomeFragment extends Fragment {
     };
 
     private void updateMyWidget(String protein, String carbs, String fats, String calories) {
+        String data = "Protein - "+protein+"\nCarbs - "+carbs+"\nFats - "+fats+"\nCalories - "+calories;
+
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getContext());
-        Bundle bundle = new Bundle();
-        int appWidgetId = bundle.getInt(
-                AppWidgetManager.EXTRA_APPWIDGET_ID,
-                AppWidgetManager.INVALID_APPWIDGET_ID);
+        Context context = getActivity();
+        assert context != null;
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.detailed_widget);
+        ComponentName thisWidget = new ComponentName(context, DetailedWidget.class);
+        remoteViews.setTextViewText(R.id.widgetData, data);
+        appWidgetManager.updateAppWidget(thisWidget, remoteViews);
+
         SharedPreferences sharedPreferences = Objects.requireNonNull( this.getActivity() ).getSharedPreferences(Constants.SP_WIDGET, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        String data = "Protein - "+protein+"\nCarbs - "+carbs+"\nFats - "+fats+"\nCalories - "+calories;
+
         editor.putString( Constants.SP_DATA,  data);
         editor.apply();
-
-        DetailedWidget.updateAppWidget( Objects.requireNonNull( getContext() ), appWidgetManager, appWidgetId);
     }
 
     private ValueEventListener getGoalData = new ValueEventListener() {

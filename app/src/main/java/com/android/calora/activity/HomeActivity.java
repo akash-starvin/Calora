@@ -19,9 +19,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.android.calora.Constants;
 import com.android.calora.R;
-import com.android.calora.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
 
 public class HomeActivity extends AppCompatActivity  {
 
@@ -34,7 +34,6 @@ public class HomeActivity extends AppCompatActivity  {
         setContentView( R.layout.activity_home );
         Toolbar toolbar = findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
-
         SharedPreferences sharedPreferences = getSharedPreferences( Constants.SP_LOGIN_CREDENTIALS, MODE_PRIVATE);
         sUserEmail = sharedPreferences.getString(Constants.SP_EMAIL, "");
 
@@ -45,7 +44,7 @@ public class HomeActivity extends AppCompatActivity  {
         Button btnLogout = headerView.findViewById( R.id.navBtnLogout );
         Button btnSettings = headerView.findViewById( R.id.navBtnSettings );
         navUserEmail.setText( sUserEmail );
-        mAppBarConfiguration = new AppBarConfiguration.Builder( R.id.nav_home, R.id.nav_profile, R.id.nav_add_meal, R.id.nav_how_to_use, R.id.nav_settings ).setDrawerLayout( drawer ).build();
+        mAppBarConfiguration = new AppBarConfiguration.Builder( R.id.nav_home, R.id.nav_profile, R.id.nav_add_meal, R.id.nav_how_to_use ).setDrawerLayout( drawer ).build();
         NavController navController = Navigation.findNavController( this, R.id.nav_host_fragment );
         NavigationUI.setupActionBarWithNavController( this, navController, mAppBarConfiguration );
         NavigationUI.setupWithNavController( navigationView, navController );
@@ -63,13 +62,6 @@ public class HomeActivity extends AppCompatActivity  {
             startActivity( intent );
 
         } );
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate( R.menu.home, menu );
-        return true;
     }
 
     @Override
