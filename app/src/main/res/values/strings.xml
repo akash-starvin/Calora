@@ -181,4 +181,8 @@
     <string name="own_meal_steps">Step 1: Select the type of food.\n\nStep 2. Select the food item.\n\nStep 3: Enter the quantity based on food type.\n\nStep 4: Add the food item to the list (max 5 food items in a meal)\n\nStep 5: Give a name to your meal.\n\nStep 6: Save the meal.</string>
     <string name="water_intake">Water intake</string>
     <string name="water_detial">Click on the Plus button whenever you have a glass of water.\n\n250ml per glass.</string>
+    <string name="img">Image</string>
+    <string name="delete">Delete</string>
+    <string name="delete_meal_message">Do you want to delete this meal ?</string>
+    <string name="meal_deleted">Meal Deleted</string>
 </resources>

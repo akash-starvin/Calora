@@ -34,6 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -52,9 +54,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_login );
         ButterKnife.bind( this );
-        getSupportActionBar().hide();
+        Objects.requireNonNull( getSupportActionBar() ).hide();
         FirebaseAuth.getInstance().signOut();
         mAuth = FirebaseAuth.getInstance();
+
         getSharedPreferenceData();
         btnLogin.setEnabled( true );
         btnLogin.setOnClickListener( view -> {
@@ -192,5 +195,4 @@ public class LoginActivity extends AppCompatActivity {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
-
 }
