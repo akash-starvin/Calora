@@ -58,6 +58,7 @@
     <string name="carbs">Carbs</string>
     <string name="fats">Fats</string>
     <string name="calories">Calories</string>
+    <string name="calories_c">Calories :</string>
 
     <string name="quantity_c">Quantity :</string>
     <string name="protein_c">Protein :</string>
@@ -67,13 +68,15 @@
 
     <string name="cal">cal</string>
     <string name="water">Water</string>
-    <string name="food_name">Food name</string>
+    <string name="food_name">Food name </string>
+    <string name="food_name_c">Food name :</string>
     <string name="save">Save</string>
     <string name="selected_food_items">Selected food items</string>
     <string name="add_food_item_to_list">Add food item to list</string>
     <string name="add_food_item_to_list_first">Add food item to list first</string>
     <string name="save_meal">Save Meal</string>
     <string name="meal_name">Meal name</string>
+    <string name="meal_name_c">Meal name :</string>
     <string name="_0g">0g</string>
     <string name="_0_cal">0 cal</string>
     <string name="_0_ml">0 ml</string>
@@ -185,6 +188,10 @@
     <string name="delete">Delete</string>
     <string name="delete_meal_message">Do you want to delete this meal ?</string>
     <string name="meal_deleted">Meal Deleted</string>
+    <string name="delete_food_item_message">Do you want to delete this food item ?</string>
+    <string name="food_item_deleted">Food item deleted</string>
     <string name="date">Date :</string>
     <string name="water_consumed">Water consumed :</string>
+    <string name="view_food_items">View food items</string>
+    <string name="food_items_c">Food Items :</string>
 </resources>

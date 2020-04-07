@@ -50,8 +50,7 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment {
 
-    @BindView( R.id.layoutToday )
-    ConstraintLayout layout;
+    @BindView( R.id.layoutToday ) ConstraintLayout layout;
     @BindView( R.id.homeTvProtein ) TextView tvProtein;
     @BindView( R.id.homeTvCarbs ) TextView tvCarbs;
     @BindView( R.id.homeTvFats ) TextView tvFats;
