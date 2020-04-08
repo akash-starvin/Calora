@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity  {
         Button btnLogout = headerView.findViewById( R.id.navBtnLogout );
         Button btnSettings = headerView.findViewById( R.id.navBtnSettings );
         navUserEmail.setText( sUserEmail );
-        mAppBarConfiguration = new AppBarConfiguration.Builder( R.id.nav_home, R.id.nav_profile, R.id.nav_add_meal,R.id.nav_view_food_items, R.id.nav_how_to_use ).setDrawerLayout( drawer ).build();
+        mAppBarConfiguration = new AppBarConfiguration.Builder( R.id.nav_home, R.id.nav_profile, R.id.nav_add_meal,R.id.nav_view_food_items, R.id.nav_view_report, R.id.nav_how_to_use ).setDrawerLayout( drawer ).build();
         NavController navController = Navigation.findNavController( this, R.id.nav_host_fragment );
         NavigationUI.setupActionBarWithNavController( this, navController, mAppBarConfiguration );
         NavigationUI.setupWithNavController( navigationView, navController );

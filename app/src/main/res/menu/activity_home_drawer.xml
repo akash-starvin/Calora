@@ -21,8 +21,14 @@
             android:title="@string/menu_add_meal" />
         <item
             android:id="@+id/nav_view_food_items"
-            android:icon="@drawable/ic_add_box_black_24dp"
+            android:icon="@drawable/ic_view_list"
             android:title="@string/view_food_items" />
+
+        <item
+            android:id="@+id/nav_view_report"
+            android:icon="@drawable/ic_report"
+            android:title="@string/view_report" />
+
         <item
             android:id="@+id/nav_how_to_use"
             android:icon="@drawable/ic_assignment_black_24dp"

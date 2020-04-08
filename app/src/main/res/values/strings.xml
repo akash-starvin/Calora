@@ -194,4 +194,6 @@
     <string name="water_consumed">Water consumed :</string>
     <string name="view_food_items">View food items</string>
     <string name="food_items_c">Food Items :</string>
+    <string name="view_report">View report</string>
+    <string name="total_macro_nutrients_consumed_on">Total macro-nutrients consumed this month- </string>
 </resources>
