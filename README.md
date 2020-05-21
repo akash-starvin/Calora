@@ -21,17 +21,17 @@ It also generates a monthly report.
 12. Settings Preference
 
 ## Functionality
-1. Create account and login.
-2. Update profile.
-3. Create different meals for breakfast, snack, lunch and dinner.
-4. Select the meal you had today.
-5. Click on + button whenever user drinks a glass of water.
-6. View detailed information of the current day.
-7. Mothly report of the macro-nutrients consumed and water intake.
-8. Add food items which weren't added by the developer.
-9. Long press on food item to delete it.
-10. Long press on user-created meal to delete it.
-11. Settings page to change meal timmings.
+1. Create an account, log in and update profile.
+2. Create different meals for breakfast, snack, lunch and dinner.
+3. Select the meal you had today.
+4. Click on + button whenever the user drinks a glass of water.
+5. View detailed information on the current day.
+6. Monthly report of the macro-nutrients consumed and water intake.
+7. Add food items which weren't added by the developer.
+8. Long press on the food item to delete it.
+9. Long press on the user-created meal to delete it.
+10.Settings page to change meal timings.
+
 
 ## Libraries
 1. MPAndroidChart
