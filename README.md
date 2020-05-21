@@ -30,7 +30,7 @@ It also generates a monthly report.
 7. Add food items which weren't added by the developer.
 8. Long press on the food item to delete it.
 9. Long press on the user-created meal to delete it.
-10.Settings page to change meal timings.
+10. Settings page to change meal timings.
 
 
 ## Libraries
